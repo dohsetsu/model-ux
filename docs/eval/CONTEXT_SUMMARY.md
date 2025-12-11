@@ -8,12 +8,22 @@
 
 ## Where everything lives
 
+### In this repo (model-ux-projects)
 | Document | Location | Purpose |
 |----------|----------|---------|
-| **Proposal** (main) | `docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md` | Shareable methodology proposal |
 | **Eval Primer** | `docs/eval/EVAL_PRIMER.md` | "What is an eval" explainer |
-| **Eval Comparison** | `docs/eval/EVAL_COMPARISON_12_9.md` | 11/24 vs 12/4 apples-to-apples |
 | **Eval Playground** | `tools/eval_playground/` | Interactive Streamlit demo |
+
+### In bi-research-test (Roshni's team repo, `jbice/eval-analysis` branch)
+| Document | Location | Purpose |
+|----------|----------|---------|
+| **Proposal** | [VOICE_TONE_RUBRIC_PROPOSAL.md](https://github.intuit.com/reporting/bi-research-test/blob/jbice/eval-analysis/docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) | Shareable methodology proposal |
+| **Eval Comparison** | [EVAL_COMPARISON_12_9.md](https://github.intuit.com/reporting/bi-research-test/blob/jbice/eval-analysis/docs/eval/EVAL_COMPARISON_12_9.md) | 11/24 vs 12/4 apples-to-apples |
+| **BI Analysis** | [BI_EVAL_ANALYSIS_v2.md](https://github.intuit.com/reporting/bi-research-test/blob/jbice/eval-analysis/docs/eval/BI_EVAL_ANALYSIS_v2.md) | BI-specific code refs, row examples |
+
+### External
+| Document | Location | Purpose |
+|----------|----------|---------|
 | **Master Spreadsheet** | [Google Sheets](https://docs.google.com/spreadsheets/d/16UfkoCSJoepmmu7ZtWN7c0p9KcNptZ-XoSBaU5vhzlc/edit) | Annotated eval results |
 
 ---
@@ -66,10 +76,6 @@
 - Requires `OPENAI_API_KEY` environment variable
 
 ---
-
-## Related repos
-
-- **BI-specific analysis:** [reporting/bi-research-test](https://github.intuit.com/reporting/bi-research-test/blob/jbice/eval-analysis/docs/eval/BI_EVAL_ANALYSIS_v2.md) (Roshni's team repo, jbice/eval-analysis branch)
 
 ---
 
