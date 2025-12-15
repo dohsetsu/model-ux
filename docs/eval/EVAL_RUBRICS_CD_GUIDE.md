@@ -13,7 +13,7 @@ This guide provides two versions of each rubric:
 1. **Human-readable version** — Plain language explanation of what we're measuring and why. This version serves as the **source of truth** for evaluation criteria. It's used for rater training, calibration sessions, and stakeholder alignment. Historically, this was also how Content Design communicated rubric changes to Engineering — we'd update the human-readable SOT, and they'd implement it in code. As Model UX matures, CDs should be able to implement content-facing changes (like rubrics and prompts) directly, with Engineering reviewing rather than translating. 
 2. **Implementation version** — Structured format ready for LLM judge prompts
 
-Each rubric is designed to be **multi-agent aware**, meaning it accounts for the different purposes and output styles of our specialized agents (BI, Search, File, etc.).
+Each rubric is designed to be **multi-agent aware**, meaning it accounts for the different purposes and current output styles of the specialized agents in play as of this writing (BI, Search, File, etc.).
 
 ---
 
@@ -39,10 +39,10 @@ That's it. Evals are alignment checks, not style guides.
 
 ## The instruction → rubric → output triangle
 
-When an eval scores poorly, follow this diagnosis flow:
+When an eval scores poorly, I've learned from eng counterparts to follow this diagnosis flow:
 
 ```
-1. What was the model INSTRUCTED to do?
+1. What was the model itself INSTRUCTED to do?
          ↓
 2. Does the RUBRIC measure alignment with those instructions?
          ↓
@@ -59,15 +59,15 @@ When an eval scores poorly, follow this diagnosis flow:
 
 ## Don't judge the output. Judge the alignment.
 
-When you look at an eval result, don't ask:
-- ❌ "Is this response good?"
-- ❌ "Would I have written it this way?"
-- ❌ "Did it use the right punctuation?"
+When looking at an eval result, **don't** ask:
+- "Is this response good?"
+- "Would I have written it this way?"
+- "Did it use the right punctuation?"
 
-Instead, ask:
-- ✅ "Did the model do what it was told?"
-- ✅ "Does the rubric measure what the model was instructed to do?"
-- ✅ "If there's a gap, where is it — model, rubric, or instructions?"
+Instead, **do** ask:
+- "Did the model do **what it was told?**"
+- "**Does the rubric measure** what the model was instructed to do?"
+- "If there's a gap, **where** is it — model, rubric, or instructions?"
 
 ---
 
@@ -77,7 +77,7 @@ Instead, ask:
 |-------|---------------|
 | **Instructions** | BI was told to provide structured financial analysis with tables, KPIs, organized output |
 | **Rubric** | Voice_tone penalized "formal" and "structured" as robotic |
-| **Output** | BI produced tables and lists (as instructed) |
+| **Output** | BI produced tables and lists and used terms like "accrual" (as instructed, see BI code citations) |
 | **Eval result** | Failed voice_tone |
 
 **The trap:** "Should this table format have passed? Is structured output 'robotic'?"
@@ -92,13 +92,13 @@ Instead, ask:
 
 When someone says "this should have passed" or "the eval got this wrong," they're often applying their **own standards**, not checking against **defined instructions**.
 
-The eval's job isn't to match human intuition. It's to check alignment with **documented, explicit instructions**.
+The eval's job **isn't** to match human intuition. It's to check alignment with **documented, explicit instructions**.
 
 If your intuition says "pass" but the rubric says "fail," ask:
 > Do the model's instructions support my intuition, or the rubric?
 
 If the instructions support your intuition → the rubric needs updating  
-If the instructions support the rubric → your intuition may need recalibrating
+If the instructions support the rubric → your intuition may still be correct if this is indeed a response that a user would/would not accept. If that's the case, investigation into the agent or model instructions may be warranted. They may need clarification, additions, or revisions to help the model understand what our desired user output should look like.
 
 ---
 
