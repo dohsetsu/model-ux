@@ -17,7 +17,117 @@ Each rubric is designed to be **multi-agent aware**, meaning it accounts for the
 
 ---
 
-# Part 1: Intuit voice and tone standards
+# Part 1: How to think about evals
+
+## The right question to ask
+
+When working with eval results, it's easy to get lost in micro-details: "It used a serial comma," "This is too many words," "The eval should have scored this better."
+
+**This is a trap.**
+
+Evals answer one fundamental question:
+
+> **Is the model doing what we've instructed it to?**
+
+And maybe a follow-up:
+
+> **How well?**
+
+That's it. Evals are alignment checks, not style guides.
+
+---
+
+## The instruction → rubric → output triangle
+
+When an eval scores poorly, follow this diagnosis flow:
+
+```
+1. What was the model INSTRUCTED to do?
+         ↓
+2. Does the RUBRIC measure alignment with those instructions?
+         ↓
+3. Does the OUTPUT follow the instructions?
+```
+
+| Finding | Diagnosis |
+|---------|-----------|
+| Output ≠ Instructions | Model/prompt problem — the agent isn't following its instructions |
+| Rubric ≠ Instructions | Eval design problem — the rubric measures the wrong things |
+| Output = Instructions, but rubric fails it | Misalignment — the rubric contradicts the model's design |
+
+---
+
+## Don't judge the output. Judge the alignment.
+
+When you look at an eval result, don't ask:
+- ❌ "Is this response good?"
+- ❌ "Would I have written it this way?"
+- ❌ "Did it use the right punctuation?"
+
+Instead, ask:
+- ✅ "Did the model do what it was told?"
+- ✅ "Does the rubric measure what the model was instructed to do?"
+- ✅ "If there's a gap, where is it — model, rubric, or instructions?"
+
+---
+
+## Example: The BI voice_tone issue
+
+| Layer | What we found |
+|-------|---------------|
+| **Instructions** | BI was told to provide structured financial analysis with tables, KPIs, organized output |
+| **Rubric** | Voice_tone penalized "formal" and "structured" as robotic |
+| **Output** | BI produced tables and lists (as instructed) |
+| **Eval result** | Failed voice_tone |
+
+**The trap:** "Should this table format have passed? Is structured output 'robotic'?"
+
+**The right question:** "Was BI instructed to use tables for financial data?"  
+**Answer:** Yes.  
+**Diagnosis:** The rubric is misaligned with the instructions. The output is correct.
+
+---
+
+## The "should have scored" trap
+
+When someone says "this should have passed" or "the eval got this wrong," they're often applying their **own standards**, not checking against **defined instructions**.
+
+The eval's job isn't to match human intuition. It's to check alignment with **documented, explicit instructions**.
+
+If your intuition says "pass" but the rubric says "fail," ask:
+> Do the model's instructions support my intuition, or the rubric?
+
+If the instructions support your intuition → the rubric needs updating  
+If the instructions support the rubric → your intuition may need recalibrating
+
+---
+
+## Two levels of "wrong"
+
+When an eval result feels wrong, it could be:
+
+1. **Alignment failure:** The model isn't following its instructions (fix the model/prompt)
+2. **Measurement failure:** The rubric isn't measuring the right things (fix the eval)
+3. **Design failure:** The instructions themselves are wrong for the use case (fix the product design)
+
+Don't conflate these. Diagnose which layer the problem lives in before trying to fix it.
+
+---
+
+## Summary: The CD mindset for evals
+
+| Don't do this | Do this instead |
+|---------------|-----------------|
+| Critique individual word choices | Ask: "What were the instructions?" |
+| Say "this should have passed" | Ask: "Does the rubric align with the instructions?" |
+| Fix outputs one by one | Fix the instruction-rubric alignment |
+| Treat eval failures as agent failures | Diagnose: model, rubric, or design? |
+
+> **Remember:** A "failing" eval score isn't necessarily bad. It might mean the eval is working correctly and catching a real misalignment. Or it might mean the eval itself is miscalibrated. Your job is to figure out which.
+
+---
+
+# Part 2: Intuit voice and tone standards
 
 ## Overview
 
@@ -233,7 +343,7 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 ---
 
-# Part 2: Content rubrics
+# Part 3: Content rubrics
 
 ## Correctness
 
@@ -500,7 +610,7 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 ---
 
-# Part 3: Quick reference
+# Part 4: Quick reference
 
 ## Agent types and their priorities
 
@@ -543,7 +653,7 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 ---
 
-# Part 4: Examples
+# Part 5: Examples
 
 ## Voice & tone examples
 
@@ -682,116 +792,6 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 > The bill will be deleted.
 
 **Why it fails:** Steps within steps, two different methods presented at once, references UI elements unnecessarily ("pop-up menu," "dropdown menu"), states the obvious at the end.
-
----
-
-# Part 5: How to think about evals
-
-## The right question to ask
-
-When working with eval results, it's easy to get lost in micro-details: "It used a serial comma," "This is too many words," "The eval should have scored this better."
-
-**This is a trap.**
-
-Evals answer one fundamental question:
-
-> **Is the model doing what we've instructed it to?**
-
-And maybe a follow-up:
-
-> **How well?**
-
-That's it. Evals are alignment checks, not style guides.
-
----
-
-## The instruction → rubric → output triangle
-
-When an eval scores poorly, follow this diagnosis flow:
-
-```
-1. What was the model INSTRUCTED to do?
-         ↓
-2. Does the RUBRIC measure alignment with those instructions?
-         ↓
-3. Does the OUTPUT follow the instructions?
-```
-
-| Finding | Diagnosis |
-|---------|-----------|
-| Output ≠ Instructions | Model/prompt problem — the agent isn't following its instructions |
-| Rubric ≠ Instructions | Eval design problem — the rubric measures the wrong things |
-| Output = Instructions, but rubric fails it | Misalignment — the rubric contradicts the model's design |
-
----
-
-## Don't judge the output. Judge the alignment.
-
-When you look at an eval result, don't ask:
-- ❌ "Is this response good?"
-- ❌ "Would I have written it this way?"
-- ❌ "Did it use the right punctuation?"
-
-Instead, ask:
-- ✅ "Did the model do what it was told?"
-- ✅ "Does the rubric measure what the model was instructed to do?"
-- ✅ "If there's a gap, where is it — model, rubric, or instructions?"
-
----
-
-## Example: The BI voice_tone issue
-
-| Layer | What we found |
-|-------|---------------|
-| **Instructions** | BI was told to provide structured financial analysis with tables, KPIs, organized output |
-| **Rubric** | Voice_tone penalized "formal" and "structured" as robotic |
-| **Output** | BI produced tables and lists (as instructed) |
-| **Eval result** | Failed voice_tone |
-
-**The trap:** "Should this table format have passed? Is structured output 'robotic'?"
-
-**The right question:** "Was BI instructed to use tables for financial data?"  
-**Answer:** Yes.  
-**Diagnosis:** The rubric is misaligned with the instructions. The output is correct.
-
----
-
-## The "should have scored" trap
-
-When someone says "this should have passed" or "the eval got this wrong," they're often applying their **own standards**, not checking against **defined instructions**.
-
-The eval's job isn't to match human intuition. It's to check alignment with **documented, explicit instructions**.
-
-If your intuition says "pass" but the rubric says "fail," ask:
-> Do the model's instructions support my intuition, or the rubric?
-
-If the instructions support your intuition → the rubric needs updating  
-If the instructions support the rubric → your intuition may need recalibrating
-
----
-
-## Two levels of "wrong"
-
-When an eval result feels wrong, it could be:
-
-1. **Alignment failure:** The model isn't following its instructions (fix the model/prompt)
-2. **Measurement failure:** The rubric isn't measuring the right things (fix the eval)
-3. **Design failure:** The instructions themselves are wrong for the use case (fix the product design)
-
-Don't conflate these. Diagnose which layer the problem lives in before trying to fix it.
-
----
-
-## Summary: The CD mindset for evals
-
-| Don't do this | Do this instead |
-|---------------|-----------------|
-| Critique individual word choices | Ask: "What were the instructions?" |
-| Say "this should have passed" | Ask: "Does the rubric align with the instructions?" |
-| Fix outputs one by one | Fix the instruction-rubric alignment |
-| Treat eval failures as agent failures | Diagnose: model, rubric, or design? |
-
-> **Remember:** A "failing" eval score isn't necessarily bad. It might mean the eval is working correctly and catching a real misalignment. Or it might mean the eval itself is miscalibrated. Your job is to figure out which.
 
 ---
 
