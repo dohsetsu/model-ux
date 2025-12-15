@@ -2,7 +2,7 @@
 
 **Author:** Jason Bice  
 **Date:** December 15, 2025  
-**Purpose:** Reference for Content Designers working on Omni eval improvements
+**Purpose:** this doc has two purposes: thie first is as a reference for Julia and Zip to mine for any ideas or coverage that I missed; the second is to ultimately incorporate this isto a set of interactive teaching tools for any content designers interested in "Model UX" workstreams.
 
 ---
 
@@ -10,7 +10,7 @@
 
 This guide provides two versions of each rubric:
 
-1. **Human-readable version** — Plain language explanation of what we're measuring and why
+1. **Human-readable version** — Plain language explanation of what we're measuring and why. This version serves as the **source of truth** for evaluation criteria. It's used for rater training, calibration sessions, and stakeholder alignment. Historically, this was also how Content Design communicated rubric changes to Engineering — we'd update the human-readable SOT, and they'd implement it in code. As Model UX matures, CDs should be able to implement content-facing changes (like rubrics and prompts) directly, with Engineering reviewing rather than translating. 
 2. **Implementation version** — Structured format ready for LLM judge prompts
 
 Each rubric is designed to be **multi-agent aware**, meaning it accounts for the different purposes and output styles of our specialized agents (BI, Search, File, etc.).
