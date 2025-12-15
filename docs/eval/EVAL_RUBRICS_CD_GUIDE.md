@@ -54,7 +54,7 @@ When an eval scores poorly, I've learned from eng counterparts to follow this di
 | :---- | :---- |
 | Output ≠ Instructions | Model/prompt problem — the agent isn't following its instructions |
 | Rubric ≠ Instructions | Eval design problem — the rubric measures the wrong things |
-| Output \= Instructions, but rubric fails it | Misalignment — the rubric contradicts the model's design |
+| Output = Instructions, but rubric fails it | Misalignment — the rubric contradicts the model's design |
 
 ---
 
@@ -346,9 +346,7 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 ## Correctness
 
-## 
-
-## Human-readable version
+### Human-readable version
 
 **What we're checking:** Is the information accurate? Are the numbers right?
 
@@ -442,8 +440,6 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 ---
 
 ## Completeness
-
-## 
 
 ### Human-readable version
 
@@ -625,18 +621,24 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 # Part 4: Quick reference
 
-## 
+## Agent profiles and capabilities
 
-## Agent types and their priorities
+| Agent | CAN do | CAN'T do | Primary metrics | Format |
+| :---- | :---- | :---- | :---- | :---- |
+| **Business Intelligence** | Calculate totals, comparisons, aggregations; return tables/charts | Access future data; access data outside QBO | Correctness (critical), Completeness | Tables, lists, structured data |
+| **Search** | List, lookup, fetch raw records; filter single entities | Calculate totals, counts, balances; rank or compare | Relevance, Correctness | Prose, occasional lists |
+| **File** | Upload, parse, summarize uploaded files | Access QBO data directly | Correctness (action accuracy) | Brief confirmations |
+| **Payment** | Create, edit, send invoices | Retrieve historical data | Correctness | Confirmations with details |
+| **General/Omni** | Route to appropriate agent; answer general questions | Deep domain-specific analysis | Relevance, Voice\_tone | Conversational prose |
 
-| Agent | Primary metrics | Format expectations |
+### Routing implications
+
+| If user asks... | Should route to... | If misrouted... |
 | :---- | :---- | :---- |
-| **Business Intelligence** | Correctness (critical), Completeness | Tables, lists, structured data |
-| **Search** | Relevance, Correctness | Prose, occasional lists |
-| **File** | Correctness (action accuracy) | Brief confirmations |
-| **General/Omni** | Relevance, Voice\_tone | Conversational prose |
-
-## 
+| "How many invoices?" / "Total revenue" / "Compare X to Y" | BI | Search can't compute — eval may show correctness/completeness failures |
+| "List all invoices over $5K" / "Show me customers in CA" | Search | BI would work but is overkill |
+| "Create invoice for John" / "Send invoice to..." | Payment | Wrong agent entirely |
+| "How do I reconcile my account?" | Help/Search | BI can't provide procedural guidance |
 
 ## Decision tree: Should this fail?
 
@@ -658,8 +660,6 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
    → Tables for simple questions = Maybe too much 
 ```
 
-## 
-
 ## Common false failures to avoid
 
 | Don't fail for... | Because... |
@@ -672,167 +672,13 @@ Output your verdict as JSON: {"verdict": true/false, "reasoning": "..."}
 
 ---
 
-# 
-
-# Part 5: Examples
-
-## 
-
-## Voice & tone examples
-
-### BI Agent \- PASS 
-
-**Query:** "What were my top expenses last month?"
-
-**Response:**  
-Top expenses \- November 2024
-
-| Category | Amount | % of Total |
-| :---- | :---- | :---- |
-| Payroll | $12,450 | 45% |
-| Rent | $3,500 | 13% |
-| Software | $2,100 | 8% |
-
-Payroll is your largest expense at nearly half of total spending.
-
-**Why it passes:** Clear, organized, uses appropriate formatting for data, ends with a useful insight.
-
----
-
-**BI Agent \- FAIL**
-
-**Query:** "What were my top expenses last month?"
-
-**Response:**
-
-I would be delighted to assist you with your inquiry regarding your expenditure patterns for the previous calendar month. Upon analysis of your financial data, it has been determined that the following expense categories demonstrate the highest levels of monetary outflow:
-
-The payroll category, which encompasses all employee-related compensation disbursements, constitutes the primary expense category at $12,450.00, representing approximately 45% of your total expenditures...
-
-**Why it fails:** Robotic opener, verbose, academic language, unnecessary padding.
-
----
-
-**Search Agent \- PASS**
-
-**Query:** "How do I reconcile my bank account?"
-
-**Response:**
-
-To reconcile your bank account in QuickBooks:
-
-1. Go to **Settings** → **Reconcile**  
-2. Select your bank account  
-3. Enter the ending balance from your bank statement  
-4. Match transactions until the difference is $0
-
-Most reconciliations take 5-10 minutes. Need help with a specific step?
-
-**Why it passes:** Direct, actionable, appropriate format for instructions, friendly close.
-
----
-
-## Completeness examples
-
-**PASS** 
-
-**Query:** "Show me revenue and expenses for Q3, broken down by month"
-
-**Response:** Shows July, August, September with both revenue AND expenses for each.
-
----
-
-**FAIL** 
-
-**Query:** "Show me revenue and expenses for Q3, broken down by month"
-
-**Response:** Shows only revenue, or shows Q3 total without monthly breakdown.
-
-**Why it fails:** Missing requested information (expenses, or monthly breakdown).
-
----
-
-## Relevance examples
-
-**PASS** 
-
-**Query:** "Which customers owe me money?"
-
-**Response:** List of customers with outstanding balances, amounts, and aging.
-
----
-
-**FAIL** 
-
-**Query:** "Which customers owe me money?"
-
-**Response:** General explanation of accounts receivable and why tracking it matters.
-
-**Why it fails:** User wanted DATA, got ADVICE. Missed the intent.
-
----
-
-## Cognitive load examples
-
-**PASS** 
-
-**Query:** "How do I delete a bill?"
-
-**Response:**
-
-To delete a bill:
-
-1. Go to **Expenses** → **Expenses**  
-2. Find the bill in your transactions list  
-3. Select **Delete** from the Action column
-
-Need help finding a specific bill?
-
-**Why it passes:** Three clear steps, no sub-steps, offers follow-up without overwhelming.
-
----
-
-**FAIL** 
-
-**Query:** "How do I delete a bill?"
-
-**Response:**
-
-To delete a bill in QuickBooks Online, follow these steps:
-
-1. **Open the Bill**:  
-     
-   - Go to **Expenses**, then select **Expenses**  
-   - Find the bill from the **Expense Transactions** list, or locate it in the **Accounts Payable register** or a report
-
-   
-
-2. **Delete the Bill**:  
-     
-   - In the Bill window, select **More** at the bottom of the screen  
-   - Choose **Delete** from the pop-up menu  
-   - Confirm by selecting **Yes** when prompted
-
-Alternatively, you can delete a bill without opening it:
-
-1. Go to **Expenses**, then select **Expenses**  
-2. Locate the bill you want to delete  
-3. In the **Action** column, select **Delete** from the dropdown menu  
-4. Confirm by selecting **Yes**
-
-The bill will be deleted.
-
-**Why it fails:** Steps within steps, two different methods presented at once, references UI elements unnecessarily ("pop-up menu," "dropdown menu"), states the obvious at the end.
-
----
-
 # Appendix: Source documents
 
-- [Intuit Universal Voice Prompt](https://docs.google.com/spreadsheets/d/1-example-link)  
-- [Universal Voice/Content Evaluation Rubric V1](http://context/eval/Universal%20generated%20voice_content%20evaluation%20rubric%20-%20Evaluation%20rubric%20V1.csv) — Source for readability and cognitive load guidance  
-- [Susan Tiss VEP Prompt](http://context/eval/Intuit%20Voice%20Prompt%20-%20Susan%20Tiss.csv) — Non-negotiables/Good-to-haves/Avoids structure  
-- [Omni Agent Config](https://github.intuit.com/omni-agent-config/tools-e2e.yml)  
-- [Current Eval Rubrics](http://context/eval/)
+- [Intuit Universal Voice Prompt](https://docs.google.com/spreadsheets/d/1FOy6SohDc8xP8E_YvEtcLal8mAHfar8Hb6yJ9QYbJGQ/edit?gid=691212558#gid=691212558)  
+- [Universal Voice/Content Evaluation Rubric V1](https://docs.google.com/spreadsheets/d/1AIknLM9O_R4Vr4ntOgxZx632Pt0GsfGgRbBKrFe1pPY/edit?gid=0#gid=0) — Source for readability and cognitive load guidance  
+- [Susan Tiss VEP Prompt](https://docs.google.com/spreadsheets/d/1FOy6SohDc8xP8E_YvEtcLal8mAHfar8Hb6yJ9QYbJGQ/edit?gid=2130773548#gid=2130773548&range=H:H) — (one of the best written versions I could find\! Really nicely structured prompt 🙂 This informed “Non-negotiables/Good-to-haves/Avoids” section)  
+- [Omni Agent Config](https://github.intuit.com/accounting-core/omni-agent-config/blob/master/conversational-ai/tools-e2e.yml)  
+- [Current Eval Rubrics](https://docs.google.com/document/d/1hiUuEWqx8DYVoXMVuWT0NLfQVJ82pPW1rSdDP4TXm4E/edit?tab=t.w36kqoo4x8ag#heading=h.jcfpeyna1ki3)
 
 ---
 
