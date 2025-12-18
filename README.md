@@ -19,13 +19,38 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 | Document | Description |
 |----------|-------------|
 | [Model UX Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) | What the role does, key deliverables, business value, and how it differs from traditional CD |
+| [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) | Academic validation from CHI/UIST research (2023-2025) — for when leadership asks "is this real?" |
 
 ### For Practitioners & Content Designers
 
 | Document | Description |
 |----------|-------------|
 | [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop, and getting started |
+| [Eval Primer](docs/eval/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
 | [Eval Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) | How to think about evals, write rubrics, and avoid common traps |
+
+---
+
+## Interactive Tools
+
+### Eval Playground
+
+An interactive Streamlit demo that lets you **see how rubric choice affects eval results** in real-time.
+
+**Features:**
+- Compare Generic vs. Agent-Aware rubrics on identical test cases
+- Visualize how weighting changes overall scores
+- Run LLM-as-a-judge evaluations with your own test cases
+
+**Run it locally:**
+```bash
+cd tools/eval_playground
+source venv/bin/activate
+export OPENAI_API_KEY="your-key-here"
+streamlit run app.py --server.headless true
+```
+
+See [tools/eval_playground/README.md](tools/eval_playground/README.md) for details.
 
 ---
 
@@ -56,11 +81,31 @@ The eval's job isn't to match human intuition — it's to check alignment with d
 
 ---
 
+## Research Validation
+
+Model UX isn't a made-up role. It's backed by peer-reviewed CHI/UIST research (2023-2025):
+
+> "When non-AI experts design AI from start to finish, they notice gaps and build solutions that AI experts could not." — Michelle S. Lam, Stanford (UIST '24)
+
+Key findings from the research:
+- **Non-experts lead better evaluations** — they find issues experts miss
+- **Concepts beat hyperparameters** — domain experts explore 136+ model designs in 30 min
+- **The gap is real** — AI experts don't understand the domains where AI is deployed
+
+See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citations and analysis.
+
+---
+
 ## Quick Links
 
-- **Role definition:** [MODEL_UX_ROLE_DESCRIPTION.md](docs/MODEL_UX_ROLE_DESCRIPTION.md)
-- **Career evolution:** [MODEL_UX_EVOLUTION.md](docs/MODEL_UX_EVOLUTION.md)
-- **Eval guide:** [EVAL_RUBRICS_CD_GUIDE.md](docs/eval/EVAL_RUBRICS_CD_GUIDE.md)
+| If you want to... | Start here |
+|-------------------|------------|
+| Explain the role to leadership | [Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) |
+| Show academic backing for the discipline | [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) |
+| Understand how CD skills transfer | [Evolution Guide](docs/MODEL_UX_EVOLUTION.md) |
+| Learn what evals are | [Eval Primer](docs/eval/EVAL_PRIMER.md) |
+| Write better rubrics | [Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) |
+| See rubric impact live | [Eval Playground](tools/eval_playground/) |
 
 ---
 

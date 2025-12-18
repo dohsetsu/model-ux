@@ -1,0 +1,36 @@
+# Reference documents (keep locally, don't track in git)
+docs/reference/
+*.docx
+*.rtf
+*.pdf
+
+# Research paper page images
+Non_pro Access_rsrch_p*.png
+
+# Personal notes
+**/Jason's thoughts*.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Streamlit
+.streamlit/
+
+# Environment variables
+.env
+.env.local
+
