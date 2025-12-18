@@ -93,7 +93,7 @@ Lam's research demonstrates this across three areas:
 
 ## CHI 2025 Yokohama: Model UX Emerges as a Discipline
 
-*Personal observations from Jason Bice, who introduced the "Model UX" terminology at the conference*
+*Personal observations from me :) (this doc was also provided to Google leadership as PoC in support of the Model UX position. Fun fact: I introduced the "Model UX" terminology at the conference, and it caught on - I started seeing it echoed in LI post-conference!*
 
 ### Theme 1: Instruments, Not Interfaces
 
