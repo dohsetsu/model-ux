@@ -33,7 +33,9 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 
 ---
 
-## Interactive Tools
+## Tools
+
+Utilities to make Model UX work easier. Use them, share them, improve them.
 
 ### Eval Playground
 
@@ -53,6 +55,20 @@ streamlit run app.py --server.headless true
 ```
 
 See [tools/eval_playground/README.md](tools/eval_playground/README.md) for details.
+
+### Google Doc Extractor
+
+A reusable Google Apps Script that extracts **tabs and images** from Google Docs into downloadable ZIP files. Perfect for pulling documentation into local environments (like Cursor) for analysis.
+
+**Features:**
+- Extract any Google Docs by URL (one or many)
+- Preserves all tabs as separate text files
+- Extracts images with markers (`[IMG_1]`, `[IMG_2]`, etc.)
+- Tables formatted as text
+
+**Setup:** Create a "Tool Doc" in Google Docs, add the script, and use it to extract any docs you have access to.
+
+See [tools/doc-extractor/README.md](tools/doc-extractor/README.md) for setup instructions.
 
 ---
 
@@ -109,6 +125,7 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | Write better rubrics | [Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) |
 | See the full Omni rubric proposal | [Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) |
 | See rubric impact live | [Eval Playground](tools/eval_playground/) |
+| Extract Google Docs for analysis | [Doc Extractor](tools/doc-extractor/) |
 
 ---
 
