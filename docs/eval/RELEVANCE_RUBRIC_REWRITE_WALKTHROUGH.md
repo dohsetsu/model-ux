@@ -109,7 +109,7 @@ This is **correctness**, not relevance. Consider:
 Is this **irrelevant**? No — the agent addressed expenses last month.
 Is this **incorrect**? Yes — the number is wrong.
 
-The rubric shouldn't penalize for correctness issues under the relevance metric. That's double-counting.
+The rubric shouldn't penalize for correctness issues under the relevance metric. That's **double-counting.**
 
 ---
 
