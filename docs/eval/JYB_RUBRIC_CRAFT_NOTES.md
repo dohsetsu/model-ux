@@ -52,7 +52,7 @@ With examples:
 > Judge thinks: "Oh, complete means it includes the relevant context, not just the number."
 > (Narrow, calibrated interpretation)
 
-**The craft:** Choosing examples that mark the boundary. You want one PASS that's minimal-but-acceptable and one FAIL that's close-but-not-quite. That teaches the judge where the line is.
+**The craft:** Choosing examples that mark the boundary. You want one PASS that's **minimal-but-acceptable** and one FAIL that's **close-but-not-quite.** That teaches the judge where the line is.
 
 ---
 
