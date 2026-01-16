@@ -120,6 +120,175 @@ Score FALSE if there are factual errors, wrong numbers, or contradictions."
 
 ---
 
+## Deep dive: LLM-as-a-judge
+
+Since this is the evaluation method most teams use at scale (including ours), it's worth understanding in detail.
+
+### What it is (in plain language)
+
+LLM-as-a-judge means **using one AI to grade another AI's work**.
+
+Instead of a human reading every response and deciding "good" or "bad," you send the response to a separate LLM (the "judge") along with instructions (the "rubric") for how to grade it.
+
+```
+┌─────────────────┐
+│  User Question  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   Your Agent    │ ──► Generates a response
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐     ┌─────────────────┐
+│    Response     │ ──► │   Judge LLM     │ ──► Pass/Fail + Reasoning
+└─────────────────┘     │  (+ Rubric)     │
+                        └─────────────────┘
+```
+
+The judge sees:
+- The original question
+- The agent's response
+- The ground truth (what the "right" answer should be)
+- The rubric (instructions for how to evaluate)
+
+And returns:
+- A verdict (TRUE/FALSE, or a score)
+- Reasoning (why it made that decision)
+
+### Why teams use it
+
+| Challenge | LLM-as-a-judge helps because... |
+|-----------|--------------------------------|
+| **Scale** | Humans can review ~50 responses/hour. LLMs can review thousands. |
+| **Consistency** | Humans get tired, distracted, and vary day-to-day. LLMs don't (as much). |
+| **Nuance** | Unlike regex or exact-match, LLMs can understand paraphrasing, context, and intent. |
+| **Cost** | Human review at scale is expensive. API calls are cheap by comparison. |
+| **Speed** | Get results in minutes, not days. |
+
+### The tradeoff you're making
+
+When you use LLM-as-a-judge, you're trading **gold-standard accuracy** for **scale and speed**.
+
+```
+Human review:     High accuracy, low scale, slow, expensive
+LLM-as-a-judge:   Good-enough accuracy, high scale, fast, cheap
+```
+
+This is usually a good tradeoff — but only if you:
+1. Write good rubrics
+2. Spot-check with humans regularly
+3. Understand the judge's failure modes
+
+### How the judge can be wrong
+
+This is the critical part. **The judge is not an oracle.** It's another LLM with its own biases and limitations.
+
+#### Position bias
+If you show the judge two responses (A and B) and ask "which is better?", it may prefer whichever one you showed first — regardless of actual quality.
+
+**Mitigation:** Randomize the order, or run both orderings and check for consistency.
+
+#### Length bias
+Judges often prefer longer, more detailed responses — even when brevity is better.
+
+```
+Response A: "Your net profit was $12,450."
+Response B: "Based on your Profit & Loss statement for the period ending 
+            November 30, 2024, your net profit was $12,450.00. This represents 
+            the difference between your total revenue and total expenses..."
+
+Judge might prefer B, even if A is exactly what the user needed.
+```
+
+**Mitigation:** Include examples in your rubric showing that concise answers can score high.
+
+#### Style matching
+Judges may reward outputs that "sound like" their own training data — formal, polished, verbose.
+
+**Mitigation:** Use few-shot examples in your rubric that show the *actual* style you want.
+
+#### Sycophancy
+Some judges are reluctant to give harsh scores. They'll find reasons to pass marginal responses.
+
+**Mitigation:** Include clear failure examples in your rubric. Make it "safe" to say FALSE.
+
+#### Inconsistency across runs
+The same response can get different scores on different runs (even with temperature=0, due to infrastructure variations).
+
+**Mitigation:** Run critical evals multiple times and look at distributions, not single scores.
+
+### What makes a good rubric (for LLM-as-a-judge)
+
+The rubric is everything. A vague rubric produces vague results.
+
+**Bad rubric:**
+```
+"Score TRUE if the response is good and helpful."
+```
+(What does "good" mean? The judge will make up its own definition.)
+
+**Better rubric:**
+```
+"Score TRUE if the response:
+1. Directly answers the user's question
+2. Contains no factual errors when compared to ground truth
+3. Uses clear, professional language
+
+Score FALSE if:
+- The response contains incorrect numbers or dates
+- The response answers a different question than asked
+- The response includes information not supported by the data"
+```
+
+**Best rubric (with examples):**
+```
+"Score TRUE if the response directly answers the question with accurate data.
+
+Example of a TRUE response:
+User: "What was my net profit last month?"
+Response: "Your net profit for November was $12,450."
+Why TRUE: Directly answers the question with the correct figure.
+
+Example of a FALSE response:
+User: "What was my net profit last month?"
+Response: "Your business is doing well! You should consider investing in marketing."
+Why FALSE: Does not answer the question asked.
+
+Now evaluate the following..."
+```
+
+**The pattern:** Definition → Detection criteria → Few-shot examples
+
+### When to trust the judge (and when not to)
+
+| Trust the judge when... | Don't trust the judge when... |
+|-------------------------|-------------------------------|
+| Rubric is specific and has examples | Rubric is vague or generic |
+| You've validated against human judgment | You've never spot-checked |
+| Results are consistent across runs | Same response gets different scores |
+| Judge reasoning makes sense | Judge reasoning is circular or wrong |
+| Metric is objective (correctness, format) | Metric is highly subjective (creativity, empathy) |
+
+### The human-in-the-loop pattern
+
+Best practice is **not** "humans OR LLM" — it's "LLM first, humans verify":
+
+```
+1. LLM judges all responses (fast, cheap)
+2. Humans review a sample of:
+   - Random passes (are these actually good?)
+   - Random fails (are these actually bad?)
+   - Edge cases (where confidence is low)
+3. Track human/LLM agreement rate over time
+4. If agreement drops, investigate rubric or judge issues
+```
+
+This gives you scale AND quality assurance.
+
+---
+
 ## Types of evals (and how to choose)
 
 There isn't one "right" eval. The right eval depends on:
@@ -331,7 +500,7 @@ A single eval run can be misleading. Statistical thinking is required.
 
 **Don't assume the judge is objective.** It has its own biases.
 
-### 6. For agents: log traces and evaluate the trace, not just the final answer
+### 6. For agents: log traces and **evaluate the trace**, not just the final answer
 
 Agent systems fail in ways that final-answer grading can't see:
 - Wrong routing (supervisor picked the wrong specialist)
