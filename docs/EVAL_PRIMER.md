@@ -120,7 +120,46 @@ Score FALSE if there are factual errors, wrong numbers, or contradictions."
 
 ---
 
-## Types of evals
+## Types of evals (and how to choose)
+
+There isn't one "right" eval. The right eval depends on:
+1. What question you're trying to answer
+2. What you can verify
+3. The risk of being wrong
+
+### By what you're measuring (most useful for product teams)
+
+| Eval family | What it answers | Best when… | Common gotchas |
+|-------------|-----------------|------------|----------------|
+| **Reference/ground-truth scoring** (exact match, structured fields, unit tests) | "Is it correct?" | You can define a verifiable output (numbers, JSON schema, classification label) | Can miss *helpfulness*; over-optimizes to format |
+| **Rubric-based human grading** | "Is it good for users?" | Quality is subjective (clarity, tone, reasoning, UX) | Needs rater training + calibration or results drift |
+| **Pairwise preference** (A vs B) | "Which version is better?" | You're comparing prompts/models and want high rater reliability | Doesn't tell you *why* without follow-up tagging |
+| **LLM-as-a-judge** | "Can we scale grading?" | You need volume and can accept periodic human audits | Judges have biases (position, length) and need controls |
+| **Instruction-following / alignment** | "Did it follow the rules?" | You have documented system instructions or policies | Must keep rubrics synced with actual instructions |
+| **Multi-turn scenario evals** | "Does it hold up across a conversation?" | Your product is an assistant/agent, not one-shot Q&A | Expensive; requires careful scenario design |
+| **Tool/environment-based evals** | "Can the system complete the task?" | Success can be verified by tool outputs (e.g., retrieved doc, computed totals) | Test harness must be stable; tool outputs can drift |
+| **Routing/orchestration evals** (supervisor) | "Did we pick the right agent + tools?" | You have multiple agents and a router/supervisor | Needs trace logging + labels; "correct agent" can be fuzzy |
+| **Robustness/consistency evals** | "Is it stable under paraphrase and repetition?" | You care about reliability and not being "flaky" | Must sample multiple runs; single run is misleading |
+| **Adversarial/red-team safety evals** | "Can users push it into unsafe behavior?" | High-stakes or compliance-sensitive domains | Needs continuous refresh; attackers adapt |
+
+### Quick decision guide: "Which eval should I use?"
+
+**If you can verify the result mechanically** (numbers, categories, structured output):
+→ Start with **reference-based** + **tool-verification** evals
+
+**If you're judging experience quality** (helpfulness, tone, clarity):
+→ Use **rubric-based human grading** early
+→ Then scale with **LLM-as-a-judge + human spot checks**
+
+**If you're comparing two versions** (prompt, model, agent policy):
+→ Prefer **pairwise preference** over "absolute 1–5" ratings for reliability
+→ For large comparisons, use tournament/pairwise structures (more stable rankings)
+
+**If the system is agentic** (router + tools + multi-turn):
+→ Always include **multi-turn scenarios** + **trace-based checks** (routing correctness, tool calls, grounding)
+
+**If harm/compliance risk is high:**
+→ Add **adversarial/red-team** evals and treat failures as release blockers
 
 ### By automation level
 
@@ -130,12 +169,14 @@ Score FALSE if there are factual errors, wrong numbers, or contradictions."
 | **Semi-automated** | LLM grades, humans spot-check | Regular testing, moderate volume |
 | **Fully automated** | No human in the loop | CI/CD pipelines, high volume |
 
-### By timing
+### By timing (offline vs online)
 
 | Type | Description | When to use |
 |------|-------------|-------------|
 | **Offline** | Run on historical data, batch mode | Before deployment, regression testing |
 | **Online** | Run on live traffic, real-time | Production monitoring, A/B tests |
+
+**Use both.** Offline evals are your *lab tests* — fast iteration, regression prevention. Online evals are your *real-world validation* — they catch things offline sets don't. Online doesn't replace offline; it verifies it.
 
 ### By scope
 
@@ -230,6 +271,89 @@ The eval crisis doesn't mean evals are useless — it means we need to be though
 5. **Combining methods** rather than relying on any single approach
 
 This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.
+
+---
+
+## Eval best practices (what works in 2025–2026)
+
+These practices directly address the eval crisis failure modes (variance, leakage, judge bias, drift).
+
+### 1. Version everything
+
+An eval is only interpretable if you can reproduce the setup:
+- Model + decoding settings (temperature, etc.)
+- System prompt / policies
+- Tools and tool schemas
+- Retrieval configuration (and ideally, a snapshot of retrieved corpora)
+- Judge prompt + judge model (if using LLM-as-a-judge)
+- Dataset version + rubric version
+
+**Why it matters:** "Scores changed" is meaningless without knowing what else changed.
+
+### 2. Separate datasets by purpose
+
+This prevents accidental "teaching to the test" and gives you a trustworthy progress signal:
+
+| Dataset | Purpose | Rules |
+|---------|---------|-------|
+| **Dev set** | Iterate freely | Expect to overfit; that's fine |
+| **Regression set** | Catch breakages | Frozen; run in CI |
+| **Holdout set** | Measure real progress | Locked; only used for "are we actually improving?" |
+
+Keeping some evaluation data closed/held-out reduces benchmark contamination.
+
+### 3. Measure more than accuracy (multi-metric thinking)
+
+For real products, accuracy trades off with other factors:
+- Robustness (does it fail gracefully?)
+- Safety (can it be pushed into harmful outputs?)
+- Efficiency (latency, cost)
+- User experience (clarity, tone, helpfulness)
+
+A single "overall score" hides these tradeoffs. Break it down.
+
+### 4. Treat scores as distributions, not single numbers
+
+LLM outputs vary. Best practice:
+- Run multiple samples for critical scenarios
+- Report pass-rate **and** variance (or confidence intervals)
+- Explicitly test consistency/robustness
+
+A single eval run can be misleading. Statistical thinking is required.
+
+### 5. If you use LLM-as-a-judge, control for known failure modes
+
+**Minimum controls:**
+- Randomize A/B order to reduce **position bias**
+- Prefer **pairwise** comparisons for subjective quality
+- Periodically audit with humans and track agreement
+- Document the judge model version (judge behavior changes with model updates)
+
+**Don't assume the judge is objective.** It has its own biases.
+
+### 6. For agents: log traces and evaluate the trace, not just the final answer
+
+Agent systems fail in ways that final-answer grading can't see:
+- Wrong routing (supervisor picked the wrong specialist)
+- Wrong tool or wrong tool arguments
+- Missing retrieval when it should have grounded the answer
+- Correct answer but broken reasoning
+
+**Best practice:** Store and score the execution trace (routing decision, tool calls, retrieved evidence) — not just the output.
+
+### 7. Use online measurement to validate offline wins
+
+Offline eval improvements can be illusory. Online metrics catch:
+- Behavior changes in real distributions (not just your test set)
+- Latency/cost regressions
+- Risk exposure changes
+- User satisfaction (the ultimate ground truth)
+
+**Offline tells you "it might work." Online tells you "it does work."**
+
+### 8. Standardize safety testing
+
+Don't rely on ad-hoc jailbreak prompts. Use structured, repeatable red-teaming suites and keep them updated. Treat safety failures as release blockers, not just metrics to track.
 
 ---
 
@@ -377,9 +501,12 @@ Fix: "Standardize date interpretation logic"
 1. **Evals are essential** — you can't improve what you don't measure
 2. **Evals are hard** — getting them right requires care and iteration
 3. **Evals can be gamed** — watch for Goodhart's Law
-4. **Evals should match your domain** — generic rubrics fail specialized agents
-5. **Evals need human oversight** — LLM judges are tools, not oracles
-6. **Results need interpretation** — dig into the failures, not just the top line
+4. **Choose the right eval type** — different questions need different approaches
+5. **Evals should match your domain** — generic rubrics fail specialized agents
+6. **Evals need human oversight** — LLM judges are tools, not oracles
+7. **Version everything** — reproducibility is non-negotiable
+8. **For agents, evaluate traces** — final-answer grading misses routing and tool failures
+9. **Results need interpretation** — dig into the failures, not just the top line
 
 ---
 
