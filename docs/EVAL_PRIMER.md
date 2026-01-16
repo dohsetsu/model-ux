@@ -64,7 +64,7 @@ Example test case:
 **Good test cases are:**
 - Representative of real usage
 - Diverse (cover edge cases, not just happy paths)
-- Reproducible (same input → same test)
+- Reproducible (same input + same test harness/setup — not necessarily same output, since LLMs are stochastic)
 
 ### 2. Ground truth
 The "correct" answer to compare against.
@@ -155,21 +155,25 @@ Understanding this crisis is essential for Model UX practitioners because it sha
 
 ### The core problem
 
-Traditional software testing assumes deterministic behavior: same input → same output. LLMs break this assumption. They're non-deterministic by design, producing different outputs for the same prompt. This makes conventional testing approaches unreliable.
+Traditional software testing assumes deterministic behavior: same input → same output. LLMs break this assumption. They're often stochastic and highly sensitive to context — even small changes in prompting, retrieved context, or infrastructure can change outputs. This makes conventional testing approaches unreliable.
 
 ### Key dimensions of the crisis
 
-#### 1. Non-determinism
+#### 1. Non-determinism and non-stationarity
 LLMs produce different outputs for the same prompt across runs. This isn't a bug — it's how they work. But it means:
 - The same test case can pass today and fail tomorrow
 - "Flaky" results aren't always a sign of bad tests
 - Statistical approaches are necessary, but add complexity
 
-#### 2. Benchmark overfitting
+For agent systems (with routing, tools, and retrieval), there's an additional layer: **non-stationarity**. The environment itself changes — retrieved documents get updated, tool outputs vary, routing logic evolves, system prompts change. So "same input" doesn't mean "same conditions." This adds extra sources of drift that pure non-determinism doesn't capture.
+
+#### 2. Benchmark overfitting and contamination
 Models can learn to perform well on public benchmarks without truly understanding the underlying task. They may:
 - Memorize patterns from training data that overlap with test sets
 - Generate answers that "look right" without genuine reasoning
 - Score high on benchmarks but fail on slight variations
+
+Researchers call this **benchmark contamination** or **data leakage** — when training data overlaps with or "leaks" into test sets. This is why some benchmarks now use closed/held-out test sets to reduce contamination.
 
 **Why it matters:** A model that "passes" an eval may still fail in real-world scenarios that weren't in the test set.
 
@@ -203,14 +207,27 @@ Scoring natural language is inherently hard:
 - Benchmarks lag behind rapidly evolving capabilities
 - Using LLMs to judge LLMs introduces its own biases
 
+**LLM-as-a-judge has well-documented failure modes:**
+- **Position bias:** Judges may prefer whichever answer appears first (or second) regardless of quality
+- **Length bias:** Judges often favor longer, more "polished" answers even when brevity is better
+- **Style matching:** Judges may reward outputs that sound like their own training data
+
+These aren't theoretical — they're observed in research and practice. This is why "the judge said so" isn't sufficient justification.
+
+#### 7. Construct validity (are we measuring what matters?)
+Even if your benchmark is stable and well-designed, it might not measure what you actually care about in production. A high score on "correctness" doesn't guarantee "helps users complete accounting tasks safely."
+
+This is the gap between **benchmark performance** and **real-world usefulness** — and it's why human validation remains essential.
+
 ### What this means for practitioners
 
 The eval crisis doesn't mean evals are useless — it means we need to be thoughtful about:
 
-1. **Designing evals** that account for non-determinism and test real-world scenarios
+1. **Designing evals** that account for non-determinism, non-stationarity, and real-world scenarios
 2. **Interpreting results** with appropriate skepticism (high scores ≠ solved problem)
 3. **Building rubrics** that match the specific context and use case
-4. **Combining methods** rather than relying on any single approach
+4. **Validating construct validity** — does your eval actually predict what users care about?
+5. **Combining methods** rather than relying on any single approach
 
 This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.
 
