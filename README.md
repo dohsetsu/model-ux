@@ -26,7 +26,7 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 | Document | Description |
 |----------|-------------|
 | [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop, and getting started |
-| [Eval Primer](docs/eval/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
+| [Eval Primer](docs/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
 | [Eval Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) | How to think about evals, write rubrics, and avoid common traps |
 | [Eval Rubric Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) | Full proposal for agent-aware rubric improvements (Omni case study) |
 | [Revised Rubrics Proposal](docs/eval/REVISED_RUBRICS_PROPOSAL.md) | Detailed human-readable + implementation versions for all metrics |
@@ -121,7 +121,7 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | Explain the role to leadership | [Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) |
 | Show academic backing for the discipline | [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) |
 | Understand how CD skills transfer | [Evolution Guide](docs/MODEL_UX_EVOLUTION.md) |
-| Learn what evals are | [Eval Primer](docs/eval/EVAL_PRIMER.md) |
+| Learn what evals are | [Eval Primer](docs/EVAL_PRIMER.md) |
 | Write better rubrics | [Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) |
 | See the full Omni rubric proposal | [Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) |
 | See rubric impact live | [Eval Playground](tools/eval_playground/) |

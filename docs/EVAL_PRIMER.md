@@ -147,56 +147,72 @@ Score FALSE if there are factual errors, wrong numbers, or contradictions."
 
 ---
 
-## The eval crisis
+## The eval crisis (an industry-wide problem)
 
-The AI industry is facing a reckoning: **most evals are broken**, and we're only now realizing it.
+The AI industry is grappling with what researchers call the **LLM Evaluation Crisis** — a fundamental challenge in reliably assessing what large language models can actually do. This isn't a problem with any specific eval or team; it's a systemic issue that the entire field is working to solve.
 
-### Problem 1: Goodhart's Law
-> "When a measure becomes a target, it ceases to be a good measure."
+Understanding this crisis is essential for Model UX practitioners because it shapes how we should think about building, interpreting, and improving evaluations.
 
-If your goal is "hit 85% on the eval," teams will optimize for the eval — not for actual quality.
+### The core problem
 
-**Symptoms:**
-- Tweaking prompts to pass specific test cases
-- "Teaching to the test" instead of improving the agent
-- Metrics go up, user satisfaction stays flat
+Traditional software testing assumes deterministic behavior: same input → same output. LLMs break this assumption. They're non-deterministic by design, producing different outputs for the same prompt. This makes conventional testing approaches unreliable.
 
-### Problem 2: LLM-as-a-judge is noisy
+### Key dimensions of the crisis
 
-LLM judges are inconsistent. The same response can get different scores:
-- On different runs (non-determinism)
-- With slightly different rubric wording
-- When examples are presented in different orders
+#### 1. Non-determinism
+LLMs produce different outputs for the same prompt across runs. This isn't a bug — it's how they work. But it means:
+- The same test case can pass today and fail tomorrow
+- "Flaky" results aren't always a sign of bad tests
+- Statistical approaches are necessary, but add complexity
 
-**We found this in our own eval:** 83% of responses mentioning "accrual" passed voice_tone, while 17% failed — for the same behavior.
+#### 2. Benchmark overfitting
+Models can learn to perform well on public benchmarks without truly understanding the underlying task. They may:
+- Memorize patterns from training data that overlap with test sets
+- Generate answers that "look right" without genuine reasoning
+- Score high on benchmarks but fail on slight variations
 
-### Problem 3: Generic rubrics vs. specialized agents
+**Why it matters:** A model that "passes" an eval may still fail in real-world scenarios that weren't in the test set.
 
-A single rubric can't fairly evaluate:
-- A casual chatbot
-- A financial analyst tool
-- A legal document reviewer
-- A medical triage assistant
+#### 3. Lack of self-awareness
+LLMs often can't identify their own limitations. They may:
+- Provide confident answers to questions they don't actually know
+- Fail to signal uncertainty when they should
+- "Hallucinate" plausible-sounding but incorrect information
 
-Each has different standards for "good." 
+**Why it matters:** An eval that only checks "is this answer correct?" misses "does the model know when it doesn't know?"
 
-**Example:** "Avoid jargon" makes sense for a chatbot, but accounting terminology is expected from a financial tool.
+#### 4. Multi-turn inconsistency
+Models may fail to maintain consistent reasoning across a conversation:
+- Contradicting earlier statements
+- Abandoning correct answers when challenged
+- Losing context as conversations grow longer
 
-### Problem 4: Ground truth drift
+**Why it matters:** Single-turn evals don't catch problems that only emerge in realistic multi-step interactions.
 
-Ground truth is often:
-- Written at a point in time (data changes)
-- Written by one person (subjective)
-- Copied from model outputs (circular)
+#### 5. Fragile reasoning
+Models may rely on superficial patterns rather than deep understanding:
+- Getting the right answer for the wrong reasons
+- Failing when problems are rephrased
+- Showing "brittleness" under minor perturbations
 
-**Result:** You're measuring how well your model matches an outdated or biased reference, not actual correctness.
+**Why it matters:** High eval scores can mask fundamental reasoning gaps.
 
-### Problem 5: Eval theater
+#### 6. Evaluation difficulty itself
+Scoring natural language is inherently hard:
+- "Good" is subjective and context-dependent
+- Benchmarks lag behind rapidly evolving capabilities
+- Using LLMs to judge LLMs introduces its own biases
 
-When evals become checkboxes rather than quality tools:
-- Teams game the metrics
-- Failures are explained away
-- "We passed eval" becomes the goal, not "users are happy"
+### What this means for practitioners
+
+The eval crisis doesn't mean evals are useless — it means we need to be thoughtful about:
+
+1. **Designing evals** that account for non-determinism and test real-world scenarios
+2. **Interpreting results** with appropriate skepticism (high scores ≠ solved problem)
+3. **Building rubrics** that match the specific context and use case
+4. **Combining methods** rather than relying on any single approach
+
+This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.
 
 ---
 

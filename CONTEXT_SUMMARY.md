@@ -15,22 +15,48 @@
 
 ```
 model-ux-projects/
+├── CONTEXT_SUMMARY.md              # You are here
+├── README.md                       # Leadership-facing overview
+│
 ├── docs/
-│   └── eval/
-│       ├── RUBRIC_CRAFT_GUIDE.md         # ⭐ Main teaching doc
-│       ├── *_WALKTHROUGH.md              # Metric-specific deep dives (6 files)
-│       ├── EVAL_RUBRICS_CD_GUIDE.md      # CD-focused eval guide
-│       ├── REVISED_RUBRICS_PROPOSAL.md   # Agent-aware rubrics proposal
-│       └── VOICE_TONE_RUBRIC_PROPOSAL.md # Voice/tone specific proposal
-├── tools/
-│   ├── doc-extractor/                    # Google Doc extraction tool
-│   │   ├── server.py
-│   │   ├── extractor.py
-│   │   └── requirements.txt
-│   └── eval_playground/                  # Eval experimentation tool
-│       └── eval_runner.py
-└── README.md
+│   ├── MODEL_UX_EVOLUTION.md       # How CD skills evolve into Model UX
+│   ├── MODEL_UX_ROLE_DESCRIPTION.md # Role definition for leadership
+│   ├── EVAL_PRIMER.md              # "What is an eval?" explainer
+│   │
+│   ├── eval/                       # ⭐ Rubric craft & eval work
+│   │   ├── RUBRIC_CRAFT_GUIDE.md           # Main teaching doc
+│   │   ├── RUBRIC_REWRITE_GUIDANCE.md      # How to approach rewrites
+│   │   ├── JYB_RUBRIC_CRAFT_NOTES.md       # Personal notes
+│   │   │
+│   │   ├── CORRECTNESS_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   ├── COMPLETENESS_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   ├── RELEVANCE_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   ├── VOICE_TONE_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   ├── NO_HALLUCINATION_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   ├── CONTENT_COMPLIANCE_RUBRIC_REWRITE_WALKTHROUGH.md
+│   │   │
+│   │   ├── EVAL_RUBRICS_CD_GUIDE.md        # CD-focused eval guide
+│   │   ├── REVISED_RUBRICS_PROPOSAL.md     # Agent-aware rubrics proposal
+│   │   └── VOICE_TONE_RUBRIC_PROPOSAL.md   # Voice/tone specific proposal
+│   │
+│   ├── research/
+│   │   └── RESEARCH_FOUNDATION.md  # Academic backing (CHI/UIST)
+│   │
+│   └── images/                     # Debug/reference screenshots
+│
+└── tools/
+    ├── doc-extractor/              # Google Apps Script tool
+    │   ├── Code.gs                 # Apps Script code
+    │   ├── DocContent.md           # Extracted content output
+    │   └── README.md
+    │
+    └── eval_playground/            # Interactive Streamlit demo
+        ├── app.py                  # Main app
+        ├── requirements.txt
+        └── README.md
 ```
+
+**Note:** Reference files (.docx, .rtf, .pdf, .png, .txt) in `docs/eval/` are gitignored — they're local research materials.
 
 ---
 
@@ -51,14 +77,16 @@ Key insight: Traditional CD instincts (brevity, simplicity) sometimes work oppos
 - ✅ Rubric Craft Guide — teaching doc for writing effective rubrics
 - ✅ 6 metric walkthroughs (correctness, completeness, relevance, voice/tone, no hallucination, content compliance)
 - ✅ CD Guide for evals — how CDs should think about evaluation
+- ✅ Revised rubrics proposal — agent-aware approach
 
 ### Tools
-- ✅ Doc Extractor — pulls content from Google Docs
-- ✅ Eval Playground — for testing rubrics locally
+- ✅ Doc Extractor — Google Apps Script for pulling content from Google Docs
+- ✅ Eval Playground — Streamlit app for testing rubrics interactively
 
 ### Discipline Definition
-- 🔄 Ongoing — defining what Model UX means, what skills matter
-- 🔄 Building case for Model UX as distinct from traditional CD
+- ✅ Model UX Evolution guide — how CD skills transfer
+- ✅ Role Description — leadership-facing definition
+- ✅ Research Foundation — academic backing from CHI/UIST
 
 ---
 
@@ -86,3 +114,16 @@ Key insight: Traditional CD instincts (brevity, simplicity) sometimes work oppos
 - `omni-eval-improvements` — Specific eval analysis (BI-focused)
 - `bi-cot-archive` — Historical CoT project (good case study)
 - `bi-research-test` — Team's BI agent (for hands-on agent work)
+
+---
+
+## Quick Start
+
+**Run the Eval Playground:**
+```bash
+cd tools/eval_playground
+source venv/bin/activate
+export OPENAI_API_KEY="your-key"
+streamlit run app.py --server.headless true
+```
+Opens at http://localhost:8501
