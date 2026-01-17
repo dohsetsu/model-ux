@@ -763,7 +763,7 @@ But the underlying principle applies everywhere: **We are the humans building th
 
 ## Eval best practices (what works in 2025–2026)
 
-These practices directly address the eval crisis failure modes (variance, leakage, judge bias, drift).
+These practices directly address the eval crisis failure modes (variance, leakage, judge bias, drift). They're synthesized from industry guidance and research — see [Sources](#sources-and-further-reading) at the end of this section.
 
 ### 1. Version everything
 
@@ -841,6 +841,26 @@ Offline eval improvements can be illusory. Online metrics catch:
 ### 8. Standardize safety testing
 
 Don't rely on ad-hoc jailbreak prompts. Use structured, repeatable red-teaming suites and keep them updated. Treat safety failures as release blockers, not just metrics to track.
+
+### Sources and further reading
+
+These best practices are synthesized from guidance published by leading AI organizations:
+
+| Source | Focus | Link |
+|--------|-------|------|
+| **Google Cloud** | Agent evaluation framework: three pillars (success/quality, trajectory analysis, trust/safety), CI/CD integration, golden datasets | [A methodical approach to agent evaluation](https://cloud.google.com/blog/topics/developers-practitioners/a-methodical-approach-to-agent-evaluation) |
+| **Anthropic** | Practical guidance for evaluating AI agents, failure mode analysis | [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) |
+| **OpenAI** | Evaluation best practices for LLM applications | [Evaluation best practices](https://platform.openai.com/docs/guides/evaluation-best-practices) |
+| **Databricks** | Methods and approaches for LLM evaluation at scale | [Best practices and methods for LLM evaluation](https://www.databricks.com/blog/best-practices-and-methods-llm-evaluation) |
+| **Hugging Face** | Comprehensive evaluation guidebook (great for beginners) | [OpenEvals Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) |
+
+**Key themes across all sources:**
+- Evaluation should be multi-dimensional (not just accuracy)
+- Human evaluation establishes ground truth; LLM-as-a-judge scales it
+- For agents: evaluate the trajectory/trace, not just the final output
+- Version everything for reproducibility
+- Integrate evals into CI/CD as quality gates
+- Production monitoring catches what offline evals miss
 
 ---
 
