@@ -345,6 +345,56 @@ There isn't one "right" eval. The right eval depends on:
 | **Offline** | Run on historical data, batch mode | Before deployment, regression testing |
 | **Online** | Run on live traffic, real-time | Production monitoring, A/B tests |
 
+#### What's the difference?
+
+**Offline evals** run on a fixed dataset — usually historical queries or curated test cases — *before* changes hit production.
+
+```
+You have: 500 test cases from last month's traffic
+You run: New prompt version against all 500
+You get: Scores (correctness: 87%, voice: 72%, etc.)
+You decide: Ship it or keep iterating
+```
+
+**Online evals** run on live traffic — real users asking real questions — *after* changes hit production.
+
+```
+You deploy: New prompt version to 10% of users
+You measure: Success rate, user satisfaction, error rates
+You compare: Does 10% group perform better than control?
+You decide: Roll out to 100% or roll back
+```
+
+#### Why this matters
+
+| Offline evals are good at... | Online evals are good at... |
+|------------------------------|----------------------------|
+| Fast iteration (minutes, not days) | Real-world validation |
+| Catching regressions before users see them | Catching issues your test set missed |
+| Controlled comparisons (same inputs) | Measuring actual user experience |
+| Testing edge cases you thought of | Discovering edge cases you didn't |
+
+#### The gap between them
+
+Your offline test set is a **sample** of reality. It has blind spots:
+- Queries users ask that you didn't include
+- Seasonal patterns (tax season vs. mid-year)
+- New features or data that didn't exist when you built the set
+- Real user behavior (follow-ups, clarifications, mistakes)
+
+**Example of the gap:**
+- Offline eval: 92% correctness on 500 test cases ✅
+- Online reality: Users are asking about a new report type that wasn't in your test set → errors spike
+
+#### The right mental model
+
+| Stage | Eval type | What it tells you |
+|-------|-----------|-------------------|
+| Development | Offline | "This might work" |
+| Pre-launch | Offline (regression) | "We didn't break anything we know about" |
+| Launch | Online (A/B test) | "This actually works for real users" |
+| Ongoing | Online (monitoring) | "It's still working" |
+
 **Use both.** Offline evals are your *lab tests* — fast iteration, regression prevention. Online evals are your *real-world validation* — they catch things offline sets don't. Online doesn't replace offline; it verifies it.
 
 ### By scope
