@@ -1,7 +1,7 @@
 # Evaluating AI agents: A practical primer
 
 **Author:** Jason Bice  
-**Date:** December 2025  
+**Created:** December 2025 | **Last updated:** January 2026  
 **Purpose:** Foundation knowledge for understanding, building, and interpreting AI evaluations
 
 ---
@@ -397,6 +397,14 @@ Your offline test set is a **sample** of reality. It has blind spots:
 
 **Use both.** Offline evals are your *lab tests* — fast iteration, regression prevention. Online evals are your *real-world validation* — they catch things offline sets don't. Online doesn't replace offline; it verifies it.
 
+### By scope
+
+| Type | Description | Example |
+|------|-------------|---------|
+| **Unit eval** | Test one component in isolation | "Does the date parser work?" |
+| **Integration eval** | Test components working together | "Does BI + QBO data return correct P&L?" |
+| **End-to-end eval** | Test full user journey | "Can a user get their tax summary?" |
+
 ---
 
 ## Which eval for which system? (A cookbook)
@@ -529,16 +537,6 @@ Different system architectures have different failure modes. Here's a guide to m
 
 ---
 
-### By scope
-
-| Type | Description | Example |
-|------|-------------|---------|
-| **Unit eval** | Test one component in isolation | "Does the date parser work?" |
-| **Integration eval** | Test components working together | "Does BI + QBO data return correct P&L?" |
-| **End-to-end eval** | Test full user journey | "Can a user get their tax summary?" |
-
----
-
 ## The eval crisis (an industry-wide problem)
 
 The AI industry is grappling with what researchers call the **LLM Evaluation Crisis** — a fundamental challenge in reliably assessing what large language models can actually do. This isn't a problem with any specific eval or team; it's a systemic issue that the entire field is working to solve.
@@ -622,6 +620,8 @@ The eval crisis doesn't mean evals are useless — it means we need to be though
 5. **Combining methods** rather than relying on any single approach
 
 This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.
+
+**What to do about it:** See [Eval best practices](#eval-best-practices-what-works-in-20252026) for concrete mitigations.
 
 ---
 
@@ -759,6 +759,8 @@ Many of these lessons come from building open-ended consumer AI products (Gemini
 
 But the underlying principle applies everywhere: **We are the humans building these systems, and we have our own flaws and foibles.** Our discomforts, our social dynamics, our blind spots — they shape what we choose to evaluate. And what we choose *not* to evaluate is where we get surprised.
 
+**How best practices help:** Many of the [best practices below](#eval-best-practices-what-works-in-20252026) directly address these blind spots — particularly separating datasets (#2), measuring more than accuracy (#3), and using online measurement (#7).
+
 ---
 
 ## Eval best practices (what works in 2025–2026)
@@ -830,6 +832,8 @@ Agent systems fail in ways that final-answer grading can't see:
 
 ### 7. Use online measurement to validate offline wins
 
+(See [By timing: offline vs online](#by-timing-offline-vs-online) for the full breakdown.)
+
 Offline eval improvements can be illusory. Online metrics catch:
 - Behavior changes in real distributions (not just your test set)
 - Latency/cost regressions
@@ -864,15 +868,15 @@ These best practices are synthesized from guidance published by leading AI organ
 
 ---
 
-## How to read eval results
+## Working with eval results
 
-### Don't just look at the top-line number
+### Reading results: Don't just look at the top-line number
 
 ❌ "We got 87% — ship it!"
 
 ✅ "We got 87% overall. Let's break that down..."
 
-### Break down by dimension
+#### Break down by dimension
 
 | Metric | Score | Interpretation |
 |--------|-------|----------------|
@@ -881,7 +885,7 @@ These best practices are synthesized from guidance published by leading AI organ
 | Relevance | 85% | Acceptable |
 | Voice/Tone | 71% | **Needs attention** |
 
-### Break down by segment
+#### Break down by segment
 
 | Segment | Correctness | Notes |
 |---------|-------------|-------|
@@ -889,19 +893,61 @@ These best practices are synthesized from guidance published by leading AI organ
 | Multi-part questions | 78% | **Struggles with complexity** |
 | Edge cases | 61% | **Known weakness** |
 
-### Look at the failures
+#### Look at the failures
 
 The most valuable data is in the FALSE rows:
 - What patterns do you see?
 - Are failures random or systematic?
 - Is the eval wrong, or is the agent wrong?
 
-### Check for noise
+#### Check for noise
 
 Ask yourself:
 - Do similar responses get similar scores?
 - If you re-ran the eval, would results change significantly?
 - Are there obvious contradictions in the reasoning?
+
+### Interpreting results: Avoiding common mistakes
+
+#### Correlation ≠ Causation
+
+"We changed the prompt and correctness went up 5%"
+
+But did the prompt change cause it? Or:
+- Did test data change?
+- Did the judge model change?
+- Is it just noise?
+
+**Always compare apples to apples:** same test cases, same judge, same rubrics.
+
+#### Beware of ceiling effects
+
+If you're at 95% correctness, a 1% improvement is actually huge — you fixed 20% of your remaining errors.
+
+If you're at 60%, a 5% improvement might just be noise.
+
+#### Trust but verify
+
+LLM-as-a-judge is a tool, not an oracle. (See [Deep dive: LLM-as-a-judge](#deep-dive-llm-as-a-judge) for failure modes.)
+
+**Spot-check the reasoning:**
+- Does the judge's explanation make sense?
+- Would a human agree with this verdict?
+- Are there obvious errors in the evaluation?
+
+#### Results are a starting point, not an endpoint
+
+Eval results tell you *where* to look, not *what* to do.
+
+```
+Eval says: "Completeness is failing"
+     ↓
+Investigation: "50% of failures are date interpretation issues"
+     ↓
+Root cause: "Agent and ground truth define 'last quarter' differently"
+     ↓
+Fix: "Standardize date interpretation logic"
+```
 
 ---
 
@@ -945,50 +991,6 @@ This lets each agent be judged by appropriate standards while keeping the eval f
 
 ---
 
-## How to interpret results
-
-### Correlation ≠ Causation
-
-"We changed the prompt and correctness went up 5%"
-
-But did the prompt change cause it? Or:
-- Did test data change?
-- Did the judge model change?
-- Is it just noise?
-
-**Always compare apples to apples:** same test cases, same judge, same rubrics.
-
-### Beware of ceiling effects
-
-If you're at 95% correctness, a 1% improvement is actually huge — you fixed 20% of your remaining errors.
-
-If you're at 60%, a 5% improvement might just be noise.
-
-### Trust but verify
-
-LLM-as-a-judge is a tool, not an oracle.
-
-**Spot-check the reasoning:**
-- Does the judge's explanation make sense?
-- Would a human agree with this verdict?
-- Are there obvious errors in the evaluation?
-
-### Results are a starting point, not an endpoint
-
-Eval results tell you *where* to look, not *what* to do.
-
-```
-Eval says: "Completeness is failing"
-     ↓
-Investigation: "50% of failures are date interpretation issues"
-     ↓
-Root cause: "Agent and ground truth define 'last quarter' differently"
-     ↓
-Fix: "Standardize date interpretation logic"
-```
-
----
-
 ## Quick reference: Eval red flags
 
 | Red Flag | What it might mean |
@@ -1007,13 +1009,15 @@ Fix: "Standardize date interpretation logic"
 
 1. **Evals are essential** — you can't improve what you don't measure
 2. **Evals are hard** — getting them right requires care and iteration
-3. **Evals can be gamed** — watch for Goodhart's Law
-4. **Choose the right eval type** — different questions need different approaches
+3. **The eval crisis is real** — non-determinism, contamination, and judge biases are systemic industry challenges
+4. **Choose the right eval type** — different systems (RAG, multi-agent, tool-using) need different approaches
 5. **Evals should match your domain** — generic rubrics fail specialized agents
 6. **Evals need human oversight** — LLM judges are tools, not oracles
 7. **Version everything** — reproducibility is non-negotiable
 8. **For agents, evaluate traces** — final-answer grading misses routing and tool failures
-9. **Results need interpretation** — dig into the failures, not just the top line
+9. **Build uncomfortable test sets** — humans break models immediately; sterile test sets miss 40% of reality
+10. **We bring our own blind spots** — discomfort prevents us from evaluating what we know we should
+11. **Results need interpretation** — dig into the failures, not just the top line
 
 ---
 
