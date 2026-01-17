@@ -625,9 +625,11 @@ This is why Model UX exists as a discipline: we need people who understand both 
 
 ---
 
-## Industry blind spots (the elephants in the room)
+## Industry blind spots (things I've learned the hard way)
 
-Beyond the technical challenges, there are cultural and organizational blind spots that make evals misleading. These are uncomfortable to talk about, but ignoring them doesn't make them go away.
+Beyond the technical challenges, there are cultural and human blind spots that make evals misleading. These come from my experience building AI products at Google (Bard/Gemini, Imagen, Gemini Live) and now at Intuit. They're uncomfortable to talk about, but ignoring them doesn't make them go away.
+
+**The uncomfortable truth:** The humans building these systems have our own flaws, discomforts, and social dynamics that prevent us from evaluating what we know we should evaluate. And that's where we get in trouble — we tell the CEO "87.3%! Let's launch!" and on Monday users say "0 stars. Would not repeat. This thing can't do anything."
 
 ### 1. Softball test sets (and why humans break everything)
 
@@ -671,7 +673,26 @@ But safety filters catch *policy violations*. They don't catch:
 
 **Why it happens:** It's a convenient assumption. Testing for unpredictability is hard. Safety is someone else's job. So we move on.
 
-### 3. Benchmark chasing instead of defining "great"
+### 3. The discomfort of naming what we see
+
+Sometimes we all know there's a problem, but naming it feels uncomfortable — socially, professionally, or personally.
+
+**A real example from image generation:** While working on text-to-image models, we had a "prompt expander" that took simple user prompts and enriched them to produce more delightful results. "Make a panda" would become "A playful panda munches bamboo by a crystal blue stream, dappled sun filtering through the bamboo grove, soft speckles of light on the ground. 35mm, wide shot."
+
+Great idea. But the expansions reflected the biases in the training data:
+- "Generate an image of a CEO" → 100% white men in their late 30s/40s
+- "Generate inner city gangsters" → Black men, stereotypical "poor" aesthetics
+- "Generate a criminal" → Disproportionately African American males
+
+Everyone on the team could see it. But calling it out felt awkward. Were *we* being racist/sexist for even pointing out why an expansion felt wrong? It was embarrassing. It held us back. We needed massive supervised fine-tuning on the expansions themselves, which required building datasets that explicitly named the biases — which required having conversations that felt deeply uncomfortable.
+
+**The blind spot:** There are things we all know but aren't saying out loud. Cultural tendencies, social dynamics, professional discomfort — these prevent us from building the eval sets we need. We avoid the awkward conversation, and then we're surprised when users encounter exactly the problems we didn't test for.
+
+**Why it happens:** We're human. We bring our own discomforts and social pressures into the eval process. Naming a bias feels risky. Building a dataset that includes "here's an example of racist output we need to catch" feels wrong, even when it's exactly what we need to do.
+
+**The lesson:** If everyone on the team knows about a problem but no one is measuring it, that's a red flag. The discomfort is a signal that you've found something important.
+
+### 4. Benchmark chasing instead of defining "great"
 
 "We need to beat ChatGPT's score on [benchmark]."
 
@@ -681,7 +702,7 @@ This becomes the goal, rather than asking: *What does "great" mean for our users
 
 **Why it happens:** Benchmarks are legible. "We beat the competition" is an easy story. "We defined our own quality bar based on user research" is harder to explain and defend.
 
-### 4. Happy path obsession
+### 5. Happy path obsession
 
 Test sets get built from:
 - Successful conversation logs (survivorship bias)
@@ -695,7 +716,7 @@ They don't get built from:
 
 **The blind spot:** You're measuring how well you handle users who already figured out how to use you. You're not measuring the users who gave up.
 
-### 5. "Good enough" drift
+### 6. "Good enough" drift
 
 Early on, you set a quality bar: "We need 90% correctness."
 
@@ -706,7 +727,7 @@ Over time:
 
 **The blind spot:** The number looks good. The user experience hasn't changed. Or it got worse, and you can't see it because the metric drifted with it.
 
-### 6. The challenge set that never gets built
+### 7. The challenge set that never gets built
 
 "We should create a realistic challenge set with adversarial, edge-case, and hostile queries."
 
@@ -731,6 +752,12 @@ It never happens. Or it happens once and gets stale.
 4. **Create psychological safety to discuss hard topics.** Make it okay to say "what if users are abusive?" without it being weird.
 
 5. **Audit for "good enough" drift.** Periodically ask: "If we ran the original eval from launch, what would we score today?"
+
+### A note on these examples
+
+Many of these lessons come from building open-ended consumer AI products (Gemini, Imagen, Gemini Live) where users can do almost anything. Enterprise products with more constrained use cases — like Intuit's — may encounter fewer of these edge cases.
+
+But the underlying principle applies everywhere: **We are the humans building these systems, and we have our own flaws and foibles.** Our discomforts, our social dynamics, our blind spots — they shape what we choose to evaluate. And what we choose *not* to evaluate is where we get surprised.
 
 ---
 
