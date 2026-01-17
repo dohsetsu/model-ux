@@ -625,6 +625,105 @@ This is why Model UX exists as a discipline: we need people who understand both 
 
 ---
 
+## Industry blind spots (the elephants in the room)
+
+Beyond the technical challenges, there are cultural and organizational blind spots that make evals misleading. These are uncomfortable to talk about, but ignoring them doesn't make them go away.
+
+### 1. Softball test sets
+
+We test with polite, well-formed, cooperative queries:
+- "What was my net profit last month?"
+- "Can you help me find a recipe for dinner?"
+- "Please summarize this document."
+
+Real users don't talk like this. Real queries include:
+- "What the fuck can you even do?"
+- "You're fucking useless. Turn on my TV, bitch."
+- "You're a unicorn and I'm a kittyKATTTT."
+- "asdfasdf"
+- Typos, fragments, mixed languages, sarcasm, testing-the-limits behavior
+
+**The blind spot:** Your eval shows 95% success on queries that represent maybe 60% of real usage. The other 40% — the messy, hostile, weird, or edge-case queries — are where the real failures hide.
+
+**Why it happens:** It's uncomfortable. Building test sets with profanity, hostility, and chaos feels unprofessional. Stakeholders don't want to see "fuck" in a spreadsheet. But users don't care about our comfort.
+
+### 2. Avoiding the awkward conversations
+
+In a business setting, it's socially awkward to say:
+- "We need to test what happens when users are verbally abusive"
+- "What if someone asks the AI to do something illegal?"
+- "How does it handle a user having a mental health crisis?"
+- "What about sexual content or harassment?"
+
+So we... don't. We build sanitized test sets and pretend users are rational professionals.
+
+**The blind spot:** Your eval doesn't cover the scenarios that create the most risk — reputational, legal, or user harm.
+
+**Why it happens:** Nobody wants to be the person who brought up the uncomfortable topic. It's easier to assume someone else is handling it.
+
+### 3. Benchmark chasing instead of defining "great"
+
+"We need to beat ChatGPT's score on [benchmark]."
+
+This becomes the goal, rather than asking: *What does "great" mean for our users?*
+
+**The blind spot:** You optimize for a number that may not correlate with user value. You hit 87% on the benchmark. Users are still frustrated. Leadership is confused.
+
+**Why it happens:** Benchmarks are legible. "We beat the competition" is an easy story. "We defined our own quality bar based on user research" is harder to explain and defend.
+
+### 4. Happy path obsession
+
+Test sets get built from:
+- Successful conversation logs (survivorship bias)
+- Product team's imagination of ideal usage
+- Demo scenarios that show the product well
+
+They don't get built from:
+- Sessions where users rage-quit
+- Queries that produced no useful response
+- Cases that made it to customer support
+
+**The blind spot:** You're measuring how well you handle users who already figured out how to use you. You're not measuring the users who gave up.
+
+### 5. "Good enough" drift
+
+Early on, you set a quality bar: "We need 90% correctness."
+
+Over time:
+- You're at 85%. "That's pretty close."
+- You tune the eval to be more lenient. Now you're at 90%.
+- Did quality improve, or did the bar lower?
+
+**The blind spot:** The number looks good. The user experience hasn't changed. Or it got worse, and you can't see it because the metric drifted with it.
+
+### 6. The challenge set that never gets built
+
+"We should create a realistic challenge set with adversarial, edge-case, and hostile queries."
+
+This gets discussed. Everyone agrees. It requires:
+- Someone to champion it
+- Time to build it
+- Uncomfortable conversations about what to include
+- Ongoing maintenance
+
+It never happens. Or it happens once and gets stale.
+
+**The blind spot:** You know the gap exists. You've talked about it. But the incentives don't align with fixing it, so it persists.
+
+### What to do about it
+
+1. **Build the uncomfortable test set.** Yes, include profanity, hostility, nonsense, and edge cases. Label it clearly, restrict access if needed, but build it.
+
+2. **Measure the right users.** Include queries from rage-quits, support tickets, and low-engagement sessions — not just successful conversations.
+
+3. **Define "great" before chasing benchmarks.** What does success look like for *your* users? Build that rubric, then measure it.
+
+4. **Create psychological safety to discuss hard topics.** Make it okay to say "what if users are abusive?" without it being weird.
+
+5. **Audit for "good enough" drift.** Periodically ask: "If we ran the original eval from launch, what would we score today?"
+
+---
+
 ## Eval best practices (what works in 2025–2026)
 
 These practices directly address the eval crisis failure modes (variance, leakage, judge bias, drift).
