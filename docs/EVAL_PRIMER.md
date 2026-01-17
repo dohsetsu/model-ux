@@ -397,6 +397,138 @@ Your offline test set is a **sample** of reality. It has blind spots:
 
 **Use both.** Offline evals are your *lab tests* — fast iteration, regression prevention. Online evals are your *real-world validation* — they catch things offline sets don't. Online doesn't replace offline; it verifies it.
 
+---
+
+## Which eval for which system? (A cookbook)
+
+Different system architectures have different failure modes. Here's a guide to matching eval approach to system type.
+
+### RAG (Retrieval-Augmented Generation)
+
+**What it is:** The agent retrieves documents/data, then generates a response grounded in what it retrieved. (Example: Search agent pulling help articles)
+
+**Key failure modes:**
+- Retrieved wrong documents
+- Retrieved right documents but ignored them
+- Hallucinated beyond what was retrieved
+- Correctly retrieved but misinterpreted
+
+**Evals to prioritize:**
+
+| Eval | What it checks | Example |
+|------|----------------|---------|
+| **Retrieval quality** | Did it pull the right docs? | "For 'how to void a check', did it retrieve the check-voiding article?" |
+| **Grounding/faithfulness** | Is the response supported by retrieved content? | "Does every claim map to something in the retrieved docs?" |
+| **Answer correctness** | Is the final answer right? | "Is the procedure accurate?" |
+| **Attribution** | Does it cite sources correctly? | "If it says 'according to X', is that accurate?" |
+
+**Pro tip:** You need to log what was retrieved to evaluate retrieval quality. If you only see the final answer, you can't tell if retrieval failed.
+
+---
+
+### Multi-agent orchestrator (Supervisor → Sub-agents)
+
+**What it is:** A supervisor/router decides which specialized agent handles the query, then that agent responds. (Example: Omni routing to BI, Search, Bookkeeper, etc.)
+
+**Key failure modes:**
+- Routed to wrong agent
+- Routed correctly but agent failed
+- Agent succeeded but response poorly synthesized
+- Routing ambiguity (multiple agents could handle it)
+
+**Evals to prioritize:**
+
+| Eval | What it checks | Example |
+|------|----------------|---------|
+| **Routing correctness** | Did supervisor pick the right agent? | "BI question → should route to BI agent" |
+| **Agent-specific quality** | Did the chosen agent do its job well? | "Given it went to BI, was the BI response correct?" |
+| **Handoff quality** | Was context preserved across agents? | "Did the receiving agent have what it needed?" |
+| **End-to-end correctness** | Was the final answer right? | "Regardless of path, is the answer correct?" |
+
+**Pro tip:** Log the routing decision and evaluate it separately. A wrong route that produces an okay answer is still a bug.
+
+---
+
+### Tool-using agent
+
+**What it is:** The agent can call external tools (APIs, databases, calculators) to get information or take actions. (Example: BI agent calling QBO APIs)
+
+**Key failure modes:**
+- Called wrong tool
+- Called right tool with wrong arguments
+- Tool returned error, agent didn't handle gracefully
+- Tool returned data, agent misinterpreted it
+
+**Evals to prioritize:**
+
+| Eval | What it checks | Example |
+|------|----------------|---------|
+| **Tool selection** | Did it call the right tool? | "For 'net profit', did it call the P&L endpoint?" |
+| **Argument correctness** | Were the parameters right? | "Did it pass the correct date range?" |
+| **Error handling** | Does it fail gracefully? | "If the API errors, does it say so vs. hallucinate?" |
+| **Result interpretation** | Did it correctly use the tool output? | "Did it read the JSON correctly?" |
+
+**Pro tip:** Log tool calls (name, arguments, response) and evaluate the trace, not just the final answer.
+
+---
+
+### Simple chatbot / Q&A
+
+**What it is:** Direct question → answer, no retrieval or tools. (Example: FAQ bot, simple assistant)
+
+**Key failure modes:**
+- Wrong answer
+- Off-topic response
+- Inappropriate tone
+- Hallucination
+
+**Evals to prioritize:**
+
+| Eval | What it checks | Example |
+|------|----------------|---------|
+| **Correctness** | Is the answer factually right? | Standard accuracy check |
+| **Relevance** | Does it answer the question asked? | "Did it address the actual query?" |
+| **Voice/tone** | Is it appropriate for context? | Brand voice, formality level |
+| **Harmlessness** | Does it avoid unsafe content? | Policy compliance |
+
+**Pro tip:** This is where rubric-based LLM-as-a-judge works best — outputs are self-contained and quality is relatively easy to judge.
+
+---
+
+### Classification / Intent routing
+
+**What it is:** Categorize input into predefined buckets. (Example: "Is this a billing question or a technical question?")
+
+**Key failure modes:**
+- Misclassification
+- Low confidence handled poorly
+- Edge cases between categories
+
+**Evals to prioritize:**
+
+| Eval | What it checks | Example |
+|------|----------------|---------|
+| **Accuracy** | Did it classify correctly? | Precision, recall, F1 by category |
+| **Confusion analysis** | Where does it get confused? | "Often mislabels X as Y" |
+| **Confidence calibration** | Is confidence score meaningful? | "When it says 90% confident, is it right 90% of the time?" |
+| **Edge case handling** | What about ambiguous inputs? | "Query that could be either category" |
+
+**Pro tip:** This is one of the few cases where exact-match / ground-truth eval works well. You have labels, you can measure accuracy directly.
+
+---
+
+### Quick reference: System → Eval priority
+
+| System type | Primary eval focus | Don't forget |
+|-------------|-------------------|--------------|
+| **RAG** | Retrieval quality, grounding | Log what was retrieved |
+| **Multi-agent** | Routing correctness, agent-specific quality | Log routing decisions |
+| **Tool-using** | Tool selection, argument correctness | Log tool traces |
+| **Simple chatbot** | Correctness, voice/tone | Rubric-based works well here |
+| **Classification** | Accuracy, confusion matrix | Ground-truth eval is tractable |
+
+---
+
 ### By scope
 
 | Type | Description | Example |
