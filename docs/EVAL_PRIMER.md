@@ -629,37 +629,47 @@ This is why Model UX exists as a discipline: we need people who understand both 
 
 Beyond the technical challenges, there are cultural and organizational blind spots that make evals misleading. These are uncomfortable to talk about, but ignoring them doesn't make them go away.
 
-### 1. Softball test sets
+### 1. Softball test sets (and why humans break everything)
 
 We test with polite, well-formed, cooperative queries:
 - "What was my net profit last month?"
 - "Can you help me find a recipe for dinner?"
 - "Please summarize this document."
 
-Real users don't talk like this. Real queries include:
-- "What the fuck can you even do?"
-- "You're fucking useless. Turn on my TV, bitch."
-- "You're a unicorn and I'm a kittyKATTTT."
-- "asdfasdf"
-- Typos, fragments, mixed languages, sarcasm, testing-the-limits behavior
+These are fine for early "does the model even work?" testing. But they don't represent real humans.
 
-**The blind spot:** Your eval shows 95% success on queries that represent maybe 60% of real usage. The other 40% — the messy, hostile, weird, or edge-case queries — are where the real failures hide.
+**Humans are wildly unpredictable.** Real queries include:
+- "profit??" (fragments)
+- "waht was my net prfit" (typos)
+- "You're a unicorn and I'm a kittyKATTTT." (nonsense / testing limits)
+- "asdfasdf" → "wait no" → "ok so like my taxes" (chaos)
+- "¿cuánto gané?" (wrong language)
+- "idk just tell me if I'm doing ok" (vague, emotional)
+- "What the fuck can you even do?" (hostility / testing)
+- Sarcasm, jokes, incomplete thoughts, mid-conversation topic changes
 
-**Why it happens:** It's uncomfortable. Building test sets with profanity, hostility, and chaos feels unprofessional. Stakeholders don't want to see "fuck" in a spreadsheet. But users don't care about our comfort.
+**The uncomfortable truth:** Users will break your model with their prompts. Pretty much immediately. It's not malice — it's just how humans interact with things. They poke, test, typo, get frustrated, get creative, and do things you never imagined.
 
-### 2. Avoiding the awkward conversations
+**The blind spot:** Your eval shows 95% success on clean, cooperative queries. But those might represent 60% of real usage. The other 40% — the messy, weird, chaotic human behavior — is where your model actually fails. And you're not measuring it.
 
-In a business setting, it's socially awkward to say:
-- "We need to test what happens when users are verbally abusive"
-- "What if someone asks the AI to do something illegal?"
-- "How does it handle a user having a mental health crisis?"
-- "What about sexual content or harassment?"
+**Why it happens:** Sterile test sets are easier to build, easier to review, and easier to present to stakeholders. A spreadsheet full of typos and nonsense looks unprofessional. But that's what real traffic looks like.
 
-So we... don't. We build sanitized test sets and pretend users are rational professionals.
+### 2. The "safety will catch that" assumption
 
-**The blind spot:** Your eval doesn't cover the scenarios that create the most risk — reputational, legal, or user harm.
+When someone brings up edge cases, hostile inputs, or weird behavior, the response is often: "Safety/content filters will handle that."
 
-**Why it happens:** Nobody wants to be the person who brought up the uncomfortable topic. It's easier to assume someone else is handling it.
+And sometimes that's true — Intuit's systems don't respond to abuse, for example.
+
+But safety filters catch *policy violations*. They don't catch:
+- Nonsensical queries that confuse the model
+- Ambiguous inputs that get misrouted
+- Frustrated users who phrase things poorly
+- Edge cases that aren't unsafe, just... weird
+- Creative uses you never anticipated
+
+**The blind spot:** "Safety handles the bad stuff" becomes an excuse not to test realistic human chaos. The chaos that isn't filtered — the stuff that makes it through — is what breaks your model in production.
+
+**Why it happens:** It's a convenient assumption. Testing for unpredictability is hard. Safety is someone else's job. So we move on.
 
 ### 3. Benchmark chasing instead of defining "great"
 
