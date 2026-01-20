@@ -592,6 +592,27 @@ The answers usually point to what the rubric is missing.
 
 ---
 
+## What Success Looks Like
+
+A well-written rubric should make you feel:
+
+- **"A reasonable person would reach the same verdict"** — The criteria are clear enough that two judges would agree
+- **"Edge cases are handled"** — The ambiguous scenarios that caused problems are now explicitly addressed
+- **"If this fails, the issue is structural"** — You've ruled out wording as the problem, so you can look elsewhere (judge context, GT quality, system issues)
+
+That last point matters. Good rubrics help you **isolate the problem**. If the eval still misbehaves with excellent rubrics, you know the fix isn't more rubric work — it's something deeper.
+
+### The test
+
+After rewriting a rubric, run it mentally against known cases:
+- Cases that should pass → do they?
+- Cases that should fail → do they?
+- Cases that were inconsistent → are they now consistent?
+
+If the answer is yes, the rubric is doing its job.
+
+---
+
 ## Appendix: The Metrics at a Glance
 
 | Metric | What it evaluates | What it does NOT evaluate |
