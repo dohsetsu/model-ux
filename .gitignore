@@ -6,9 +6,13 @@ docs/reference/
 
 # Research paper page images
 Non_pro Access_rsrch_p*.png
+1768673143697-*.jpg
+GEPA.jpg
 
-# Personal notes
+# Personal notes and reference txt files in root
 **/Jason's thoughts*.txt
+**/MFUX*.txt
+**/*Before Model UX*.txt
 
 # Python
 __pycache__/
