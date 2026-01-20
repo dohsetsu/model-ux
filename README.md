@@ -18,18 +18,18 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 
 | Document | Description |
 |----------|-------------|
-| [Model UX Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) | What the role does, key deliverables, business value, and how it differs from traditional CD |
-| [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) | Academic validation from CHI/UIST research (2023-2025) — for when leadership asks "is this real?" |
+| [Model UX Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) | What the role does, key deliverables, business value |
+| [Why Model UX Exists](docs/MODEL_UX_WHY_IT_EXISTS.md) | The gap that existed before — who owned what, what broke, how Model UX fills it |
+| [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) | Academic validation from CHI/UIST research (2023-2025) |
 
 ### For Practitioners & Content Designers
 
 | Document | Description |
 |----------|-------------|
-| [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop, and getting started |
+| [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop |
 | [Eval Primer](docs/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
-| [Eval Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) | How to think about evals, write rubrics, and avoid common traps |
-| [Eval Rubric Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) | Full proposal for agent-aware rubric improvements (Omni case study) |
-| [Revised Rubrics Proposal](docs/eval/REVISED_RUBRICS_PROPOSAL.md) | Detailed human-readable + implementation versions for all metrics |
+| [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) | How to write effective rubrics — principles, techniques, examples |
+| [Rubric Rewrites](docs/eval/RUBRIC_REWRITES.md) | Before/after rewrites for all 6 metrics with explanations |
 
 ---
 
@@ -119,11 +119,12 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | If you want to... | Start here |
 |-------------------|------------|
 | Explain the role to leadership | [Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) |
+| Explain why this role needs to exist | [Why Model UX Exists](docs/MODEL_UX_WHY_IT_EXISTS.md) |
 | Show academic backing for the discipline | [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) |
 | Understand how CD skills transfer | [Evolution Guide](docs/MODEL_UX_EVOLUTION.md) |
 | Learn what evals are | [Eval Primer](docs/EVAL_PRIMER.md) |
-| Write better rubrics | [Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) |
-| See the full Omni rubric proposal | [Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) |
+| Learn to write rubrics | [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) |
+| See before/after rubric rewrites | [Rubric Rewrites](docs/eval/RUBRIC_REWRITES.md) |
 | See rubric impact live | [Eval Playground](tools/eval_playground/) |
 | Extract Google Docs for analysis | [Doc Extractor](tools/doc-extractor/) |
 
