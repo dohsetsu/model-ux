@@ -40,6 +40,8 @@ It outputs a verdict. That's it.
 
 **The failure mode:** When the rubric is vague, the judge fills the gap with its own assumptions. Different queries, different vibes, different assumptions → inconsistent verdicts.
 
+> **Research backing:** The MT-Bench paper (Zheng et al., NeurIPS 2023) documents systematic judge biases — position preference, length preference, self-enhancement — that emerge when judges lack clear guidance. Explicit rubrics with examples reduce these biases. [Link](https://arxiv.org/abs/2306.05685)
+
 ---
 
 ### The few-shot trick
@@ -62,6 +64,8 @@ When you give the judge examples, you're not just clarifying — you're **anchor
 > (Narrow, calibrated interpretation)
 
 **The craft:** Choose examples that mark the boundary. One PASS that's minimal-but-acceptable, one FAIL that's close-but-not-quite. That teaches the judge where the line is.
+
+> **Research backing:** The CheckList framework (Ribeiro et al., ACL 2020) demonstrates that behavioral testing — defining specific linguistic capabilities and edge cases — outperforms aggregate accuracy testing. Rubrics with examples function the same way: they define the behavior boundary. [Link](https://aclanthology.org/2020.acl-main.442/)
 
 ---
 
@@ -629,3 +633,19 @@ If the answer is yes, the rubric is doing its job.
 ---
 
 *This guide was developed from real evaluation analysis and rubric improvement work. The examples come from actual failure patterns observed in production evaluations.*
+
+---
+
+## Research References
+
+The principles in this guide are supported by peer-reviewed research:
+
+| Concept | Research | Link |
+|---------|----------|------|
+| Behavioral testing (examples > abstractions) | Ribeiro et al., "CheckList" (ACL 2020) | [aclanthology.org](https://aclanthology.org/2020.acl-main.442/) |
+| LLM judge biases and mitigations | Zheng et al., "MT-Bench" (NeurIPS 2023) | [arxiv.org](https://arxiv.org/abs/2306.05685) |
+| Multi-dimensional evaluation | Liang et al., "HELM" (Stanford 2022) | [arxiv.org](https://arxiv.org/abs/2211.09110) |
+| Human-AI interaction guidelines | Amershi et al., "Guidelines for HAI" (CHI 2019) | [microsoft.com](https://www.microsoft.com/en-us/research/uploads/prod/2019/01/Guidelines-for-Human-AI-Interaction-camera-ready.pdf) |
+| Domain experts in AI development | Lam, "Non-AI Expert Control" (UIST 2024) | [DOI](https://doi.org/10.1145/3672539.3686714) |
+
+For the full research foundation supporting Model UX, see [RESEARCH_FOUNDATION.md](../research/RESEARCH_FOUNDATION.md).

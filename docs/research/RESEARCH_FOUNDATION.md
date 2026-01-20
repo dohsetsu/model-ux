@@ -19,6 +19,8 @@ Content designers, with their expertise in language, user understanding, and com
 
 ## Research Overview
 
+### Domain Experts in AI Development
+
 | Source | Venue | Year | Key Finding |
 |--------|-------|------|-------------|
 | Lam et al. | UIST '24 | 2024 | Non-AI experts can lead evaluations, design objectives, and control end-to-end AI systems |
@@ -27,6 +29,15 @@ Content designers, with their expertise in language, user understanding, and com
 | Lam et al. | CHI '24 | 2024 | High-level concepts (not code) enable non-experts to analyze unstructured text at scale |
 | Subramonyam et al. | CHI '21 | 2021 | UX practitioners need new methods to prototype AI behavior, not just interfaces |
 | Yang et al. | CHI '20 | 2020 | Identified fundamental challenges in designing human-AI interaction |
+
+### AI UX Guidelines & Evaluation Methods
+
+| Source | Venue | Year | Key Finding |
+|--------|-------|------|-------------|
+| Amershi et al. | CHI '19 | 2019 | 18 evidence-based guidelines for human-AI interaction design |
+| Liang et al. (HELM) | arXiv | 2022 | Single metrics are misleading; evaluation requires multi-dimensional measurement |
+| Zheng et al. (MT-Bench) | NeurIPS '23 | 2023 | LLM judges have systematic biases (position, length, self-enhancement) |
+| Ribeiro et al. (CheckList) | ACL '20 | 2020 | Behavioral testing outperforms aggregate accuracy for NLP systems |
 
 ---
 
@@ -220,6 +231,8 @@ Content designers are domain experts in **language, communication, and user unde
 
 ## References
 
+### Domain Experts in AI Development
+
 1. Lam, M.S. (2024). "Granting Non-AI Experts Creative Control Over AI Systems." *UIST Adjunct '24*. [DOI](https://doi.org/10.1145/3672539.3686714)
 
 2. Lam, M.S. et al. (2022). "End-User Audits: A System Empowering Communities to Lead Large-Scale Investigations of Harmful Algorithmic Behavior." *CSCW '22*. [DOI](https://doi.org/10.1145/3555625)
@@ -228,9 +241,21 @@ Content designers are domain experts in **language, communication, and user unde
 
 4. Lam, M.S. et al. (2024). "Concept Induction: Analyzing Unstructured Text with High-Level Concepts Using LLooM." *CHI '24*. [DOI](https://doi.org/10.1145/3613904.3642830)
 
+### Human-AI Interaction Design
+
 5. Subramonyam, H., Seifert, C., & Adar, E. (2021). "ProtoAI: Model-Informed Prototyping for AI-Powered Interfaces." *CHI '21*. [DOI](https://doi.org/10.1145/3411764.3445188)
 
 6. Yang, Q., Steinfeld, A., Rose, C., & Zimmerman, J. (2020). "Re-examining Whether, Why, and How Human-AI Interaction Is Uniquely Difficult to Design." *CHI '20*. [DOI](https://doi.org/10.1145/3313831.3376301)
+
+7. Amershi, S. et al. (2019). "Guidelines for Human-AI Interaction." *CHI '19*. [PDF](https://www.microsoft.com/en-us/research/uploads/prod/2019/01/Guidelines-for-Human-AI-Interaction-camera-ready.pdf)
+
+### Evaluation Research
+
+8. Liang, P. et al. (2022). "Holistic Evaluation of Language Models (HELM)." *arXiv*. [Link](https://arxiv.org/abs/2211.09110)
+
+9. Zheng, L., Chiang, W-L., et al. (2023). "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena." *NeurIPS '23*. [Link](https://arxiv.org/abs/2306.05685)
+
+10. Ribeiro, M.T. et al. (2020). "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList." *ACL '20*. [Link](https://aclanthology.org/2020.acl-main.442/)
 
 ---
 
@@ -241,20 +266,122 @@ Content designers are domain experts in **language, communication, and user unde
 
 ---
 
+---
+
+## Additional Foundational Research
+
+### 7. Guidelines for Human-AI Interaction
+
+**Authors:** Saleema Amershi, Dan Weld, Mihaela Vorvoreanu, et al. (Microsoft Research)  
+**Venue:** CHI '19  
+**PDF:** [microsoft.com/research](https://www.microsoft.com/en-us/research/uploads/prod/2019/01/Guidelines-for-Human-AI-Interaction-camera-ready.pdf)
+
+#### Key Contribution
+
+The canonical paper on AI UX design. Proposes **18 design guidelines** organized by interaction phase:
+
+| Phase | Example Guidelines |
+|-------|-------------------|
+| **Initially** | G1: Make clear what the system can do |
+| **During interaction** | G5: Match relevant social norms |
+| **When wrong** | G10: Scope services when in doubt |
+| **Over time** | G16: Provide global controls |
+
+#### Why This Matters for Model UX
+
+These guidelines are the industry standard for evaluating AI user experience. They directly inform rubric design — especially voice/tone, completeness, and relevance metrics.
+
+> "AI systems should make clear what they can do... support efficient dismissal... and remember recent interactions."
+
+---
+
+### 8. Holistic Evaluation of Language Models (HELM)
+
+**Authors:** Percy Liang et al. (Stanford CRFM)  
+**Venue:** arXiv 2022  
+**Link:** [arxiv.org/abs/2211.09110](https://arxiv.org/abs/2211.09110)
+
+#### Key Contribution
+
+A comprehensive evaluation framework that measures models across **multiple dimensions**, not just accuracy:
+- Accuracy, calibration, robustness
+- Fairness, bias, toxicity
+- Efficiency (inference time, compute)
+
+#### Why This Matters for Model UX
+
+HELM demonstrates that **single metrics are misleading**. Real evaluation requires multi-dimensional measurement — exactly what the Eval Primer advocates.
+
+---
+
+### 9. Judging LLM-as-a-Judge (MT-Bench / Chatbot Arena)
+
+**Authors:** Lianmin Zheng, Wei-Lin Chiang, et al.  
+**Venue:** NeurIPS 2023  
+**Link:** [arxiv.org/abs/2306.05685](https://arxiv.org/abs/2306.05685)
+
+#### Key Contribution
+
+Foundational research on using LLMs to evaluate other LLMs. Documents key **failure modes**:
+- **Position bias:** Judges prefer responses shown first (or second)
+- **Length bias:** Judges favor longer, more detailed responses
+- **Self-enhancement:** Models rate their own outputs higher
+
+Also introduces pairwise comparison and tournament-style evaluation as more reliable alternatives to absolute scoring.
+
+#### Why This Matters for Model UX
+
+This paper provides the empirical basis for the LLM-as-a-judge best practices in our Eval Primer. The mitigations we recommend (randomize order, use pairwise, audit with humans) come directly from this research.
+
+---
+
+### 10. CheckList: Beyond Accuracy
+
+**Authors:** Marco Tulio Ribeiro, Tongshuang Wu, Carlos Guestrin, Sameer Singh  
+**Venue:** ACL 2020  
+**Link:** [aclanthology.org/2020.acl-main.442](https://aclanthology.org/2020.acl-main.442/)
+
+#### Key Contribution
+
+Introduces **behavioral testing** for NLP models — testing specific linguistic capabilities rather than aggregate accuracy:
+- Minimum functionality tests (does it handle negation?)
+- Invariance tests (does paraphrasing change the answer?)
+- Directional expectation tests (should confidence increase with more evidence?)
+
+#### Why This Matters for Model UX
+
+CheckList is an academic ancestor of evaluation rubrics. It demonstrates that "does the model work?" requires breaking down into specific behaviors — the same principle behind our metric-specific rubrics.
+
+---
+
+## Industry Design Frameworks
+
+These frameworks translate academic research into practitioner-ready guidance:
+
+| Framework | Organization | Focus | Link |
+|-----------|--------------|-------|------|
+| **People + AI Guidebook** | Google PAIR | Mental models, data collection, explainability | [pair.withgoogle.com/guidebook](https://pair.withgoogle.com/guidebook/) |
+| **Human Interface Guidelines for ML** | Apple | On-device ML, proactive suggestions, feedback | [developer.apple.com/design/human-interface-guidelines/machine-learning](https://developer.apple.com/design/human-interface-guidelines/machine-learning) |
+| **HAX Toolkit** | Microsoft | Practical tools for implementing Amershi's 18 guidelines | [microsoft.com/research/project/human-ai-experience-hax-toolkit](https://www.microsoft.com/en-us/research/project/human-ai-experience-hax-toolkit/) |
+
+---
+
 ## Further Reading
 
-### Industry Perspectives
+### Industry Evaluation Perspectives
 
 - Google Cloud: [A Methodical Approach to Agent Evaluation](https://cloud.google.com/blog/topics/developers-practitioners/a-methodical-approach-to-agent-evaluation)
 - Anthropic: [Demystifying Evals for AI Agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
 - OpenAI: [Evaluation Best Practices](https://platform.openai.com/docs/guides/evaluation-best-practices)
 - Hugging Face: [Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook)
+- Databricks: [Best Practices for LLM Evaluation](https://www.databricks.com/blog/best-practices-and-methods-llm-evaluation)
 
 ### Academic Venues
 
 - **CHI** (Conference on Human Factors in Computing Systems) — Primary venue for human-AI interaction research
 - **UIST** (User Interface Software and Technology) — Tools and systems for interaction
 - **CSCW** (Computer-Supported Cooperative Work) — Collaborative and social aspects of AI
+- **NeurIPS / ACL** — Machine learning and natural language processing
 
 ---
 
