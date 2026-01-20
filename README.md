@@ -2,6 +2,22 @@
 
 A collection of documentation, frameworks, and guides for the **Model UX** discipline — the practice of ensuring AI-powered products behave correctly and deliver high-quality user experiences at scale.
 
+> **👋 New here?** See [CONTEXT_SUMMARY.md](CONTEXT_SUMMARY.md) for a recommended reading order.
+
+---
+
+## Why this exists
+
+We've heard it from every stage: *"AI changes everything."* CEOs promise transformation. Entire industries will evolve. Nothing will be the same.
+
+And yet — when Content Designers suggest that *our* roles might change, that our responsibilities might expand, that we might have something essential to contribute to AI product development? Suddenly it's pearl-clutching time.
+
+This disconnect isn't new. Content Design has historically been undervalued — given lip service about importance while being excluded from real decision-making. Our work shapes how millions of people experience products, but we've rarely had a true seat at the table.
+
+**The AI era changes that — if we're willing to change with it.**
+
+Model UX is an invitation: to evolve our craft, to claim expertise in territory that desperately needs it, and to finally be recognized for the strategic value we've always brought. The models are generating language at scale. *Someone* needs to ensure that language is good. That someone should be us.
+
 ---
 
 ## What is Model UX?
