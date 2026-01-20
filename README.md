@@ -51,27 +51,6 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 
 ## Tools
 
-Utilities to make Model UX work easier. Use them, share them, improve them.
-
-### Eval Playground
-
-An interactive Streamlit demo that lets you **see how rubric choice affects eval results** in real-time.
-
-**Features:**
-- Compare Generic vs. Agent-Aware rubrics on identical test cases
-- Visualize how weighting changes overall scores
-- Run LLM-as-a-judge evaluations with your own test cases
-
-**Run it locally:**
-```bash
-cd tools/eval_playground
-source venv/bin/activate
-export OPENAI_API_KEY="your-key-here"
-streamlit run app.py --server.headless true
-```
-
-See [tools/eval_playground/README.md](tools/eval_playground/README.md) for details.
-
 ### Google Doc Extractor
 
 A reusable Google Apps Script that extracts **tabs and images** from Google Docs into downloadable ZIP files. Perfect for pulling documentation into local environments (like Cursor) for analysis.
@@ -141,7 +120,6 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | Learn what evals are | [Eval Primer](docs/EVAL_PRIMER.md) |
 | Learn to write rubrics | [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) |
 | See before/after rubric rewrites | [Rubric Rewrites](docs/eval/RUBRIC_REWRITES.md) |
-| See rubric impact live | [Eval Playground](tools/eval_playground/) |
 | Extract Google Docs for analysis | [Doc Extractor](tools/doc-extractor/) |
 
 ---

@@ -36,11 +36,6 @@ model-ux-projects/
 │   └── images/                      # Screenshots (debug, examples)
 │
 └── tools/
-    ├── eval_playground/             # Interactive Streamlit demo
-    │   ├── app.py
-    │   ├── requirements.txt
-    │   └── README.md
-    │
     └── doc-extractor/               # Google Apps Script for doc extraction
         ├── Code.gs
         └── README.md
@@ -91,19 +86,6 @@ Model UX is the evolution of content design for AI/LLM products. It bridges:
 ---
 
 ## Tools
-
-### Eval Playground
-
-Interactive demo showing how rubric choice affects eval results.
-
-```bash
-cd tools/eval_playground
-source venv/bin/activate
-export OPENAI_API_KEY="your-key"
-streamlit run app.py --server.headless true
-```
-
-Opens at http://localhost:8501
 
 ### Doc Extractor
 

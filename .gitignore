@@ -1,3 +1,6 @@
+# Work in progress (not ready for sharing)
+_wip/
+
 # Reference documents (keep locally, don't track in git)
 docs/reference/
 *.docx
