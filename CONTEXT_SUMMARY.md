@@ -1,13 +1,15 @@
 # Context Summary: model-ux-projects
 
-**Last Updated:** January 15, 2026  
+**Last Updated:** January 20, 2026  
 **Owner:** Jason Bice (Model UX)
 
 ---
 
 ## What This Repo Is
 
-**Home base** for Model UX discipline work. This is the broader umbrella for tools, guides, and practices that define what "Model UX" means as an evolved content design role.
+**Home base** for Model UX discipline work — tools, guides, and practices that define what "Model UX" means as an evolved content design role.
+
+**Not project-specific.** This repo is about the *discipline*, not a specific product eval. For Omni-specific work, see `omni-eval-improvements`.
 
 ---
 
@@ -15,115 +17,120 @@
 
 ```
 model-ux-projects/
-├── CONTEXT_SUMMARY.md              # You are here
-├── README.md                       # Leadership-facing overview
+├── README.md                        # Start here — leadership + practitioner overview
+├── CONTEXT_SUMMARY.md               # You are here
 │
 ├── docs/
-│   ├── MODEL_UX_EVOLUTION.md       # How CD skills evolve into Model UX
-│   ├── MODEL_UX_ROLE_DESCRIPTION.md # Role definition for leadership
-│   ├── EVAL_PRIMER.md              # "What is an eval?" explainer
+│   ├── MODEL_UX_ROLE_DESCRIPTION.md # For leadership: what the role does
+│   ├── MODEL_UX_WHY_IT_EXISTS.md    # The gap before Model UX existed
+│   ├── MODEL_UX_EVOLUTION.md        # How CD skills transfer to Model UX
+│   ├── EVAL_PRIMER.md               # ⭐ Foundational eval explainer (long, comprehensive)
 │   │
-│   ├── eval/                       # ⭐ Rubric craft & eval work
-│   │   ├── RUBRIC_CRAFT_GUIDE.md           # Main teaching doc
-│   │   ├── RUBRIC_REWRITE_GUIDANCE.md      # How to approach rewrites
-│   │   ├── JYB_RUBRIC_CRAFT_NOTES.md       # Personal notes
-│   │   │
-│   │   ├── CORRECTNESS_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   ├── COMPLETENESS_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   ├── RELEVANCE_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   ├── VOICE_TONE_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   ├── NO_HALLUCINATION_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   ├── CONTENT_COMPLIANCE_RUBRIC_REWRITE_WALKTHROUGH.md
-│   │   │
-│   │   ├── EVAL_RUBRICS_CD_GUIDE.md        # CD-focused eval guide
-│   │   ├── REVISED_RUBRICS_PROPOSAL.md     # Agent-aware rubrics proposal
-│   │   └── VOICE_TONE_RUBRIC_PROPOSAL.md   # Voice/tone specific proposal
+│   ├── eval/                        # Rubric craft resources
+│   │   ├── RUBRIC_CRAFT_GUIDE.md    # How to write effective rubrics
+│   │   └── RUBRIC_REWRITES.md       # Before/after examples for 6 metrics
 │   │
 │   ├── research/
-│   │   └── RESEARCH_FOUNDATION.md  # Academic backing (CHI/UIST)
+│   │   └── RESEARCH_FOUNDATION.md   # Academic backing (CHI/UIST 2020-2024)
 │   │
-│   └── images/                     # Debug/reference screenshots
+│   └── images/                      # Screenshots (debug, examples)
 │
 └── tools/
-    ├── doc-extractor/              # Google Apps Script tool
-    │   ├── Code.gs                 # Apps Script code
-    │   ├── DocContent.md           # Extracted content output
+    ├── eval_playground/             # Interactive Streamlit demo
+    │   ├── app.py
+    │   ├── requirements.txt
     │   └── README.md
     │
-    └── eval_playground/            # Interactive Streamlit demo
-        ├── app.py                  # Main app
-        ├── requirements.txt
+    └── doc-extractor/               # Google Apps Script for doc extraction
+        ├── Code.gs
         └── README.md
 ```
 
-**Note:** Reference files (.docx, .rtf, .pdf, .png, .txt) in `docs/eval/` are gitignored — they're local research materials.
+**Note:** Reference files (`.docx`, `.rtf`, `.pdf`, `.png`, personal notes) in `docs/eval/` are gitignored — they exist locally but aren't tracked.
+
+---
+
+## Reading Order for New Readers
+
+If you're new to this repo, here's the recommended path:
+
+| Order | Document | Time | What you'll learn |
+|-------|----------|------|-------------------|
+| 1 | [README.md](README.md) | 5 min | Overview of Model UX, quick links |
+| 2 | [MODEL_UX_WHY_IT_EXISTS.md](docs/MODEL_UX_WHY_IT_EXISTS.md) | 5 min | The problem Model UX solves |
+| 3 | [MODEL_UX_EVOLUTION.md](docs/MODEL_UX_EVOLUTION.md) | 10 min | How CD skills transfer |
+| 4 | [EVAL_PRIMER.md](docs/EVAL_PRIMER.md) | 30 min | Deep dive on evals (the meat) |
+| 5 | [RUBRIC_CRAFT_GUIDE.md](docs/eval/RUBRIC_CRAFT_GUIDE.md) | 20 min | How to write good rubrics |
+
+For leadership presentations, use:
+- [MODEL_UX_ROLE_DESCRIPTION.md](docs/MODEL_UX_ROLE_DESCRIPTION.md)
+- [RESEARCH_FOUNDATION.md](docs/research/RESEARCH_FOUNDATION.md)
 
 ---
 
 ## What is "Model UX"?
 
 Model UX is the evolution of content design for AI/LLM products. It bridges:
+
 - **Content Design** — Voice, tone, clarity, user understanding
-- **Prompt Engineering** — How to instruct models effectively
+- **Prompt Engineering** — How to instruct models effectively  
 - **Evaluation** — How to measure if AI responses are good
 
-Key insight: Traditional CD instincts (brevity, simplicity) sometimes work opposite in LLM contexts (rubrics can be long, models don't have cognitive load).
+**Key insight:** Traditional CD instincts (brevity, simplicity) sometimes work *opposite* in LLM contexts. Rubrics can be long. Models don't have cognitive load. Few-shot examples matter more than elegant prose.
 
 ---
 
-## Current State of Work
+## Key Concepts
 
-### Eval/Rubric Work
-- ✅ Rubric Craft Guide — teaching doc for writing effective rubrics
-- ✅ 6 metric walkthroughs (correctness, completeness, relevance, voice/tone, no hallucination, content compliance)
-- ✅ CD Guide for evals — how CDs should think about evaluation
-- ✅ Revised rubrics proposal — agent-aware approach
-
-### Tools
-- ✅ Doc Extractor — Google Apps Script for pulling content from Google Docs
-- ✅ Eval Playground — Streamlit app for testing rubrics interactively
-
-### Discipline Definition
-- ✅ Model UX Evolution guide — how CD skills transfer
-- ✅ Role Description — leadership-facing definition
-- ✅ Research Foundation — academic backing from CHI/UIST
-
----
-
-## Key Concepts to Remember
-
-1. **Rubrics can be long** — Models don't have cognitive load like humans
-2. **Few-shot examples** — Most important part of any rubric
+1. **Rubrics are prompts** — Everything we know about prompting applies to rubrics
+2. **Few-shot examples anchor judgment** — Most important part of any rubric
 3. **Definition vs Detection** — Rubrics need both "what good looks like" AND "how to check"
-4. **Double-counting problem** — Single errors shouldn't penalize multiple metrics
-5. **Capability-based evaluation** — Future direction for scalable rubrics
+4. **One error, one penalty** — Avoid double-counting across metrics
+5. **Agent-aware evaluation** — Different agents need different success criteria
 
 ---
 
-## When to Work Here
+## Tools
 
-- Building Model UX as a discipline
-- Creating tools for CD/Model UX work
-- Developing training materials
-- Anything that's about the *practice* not a specific project
+### Eval Playground
 
----
+Interactive demo showing how rubric choice affects eval results.
 
-## Related Repos
-
-- `omni-eval-improvements` — Specific eval analysis (BI-focused)
-- `bi-cot-archive` — Historical CoT project (good case study)
-- `bi-research-test` — Team's BI agent (for hands-on agent work)
-
----
-
-## Quick Start
-
-**Run the Eval Playground:**
 ```bash
 cd tools/eval_playground
 source venv/bin/activate
 export OPENAI_API_KEY="your-key"
 streamlit run app.py --server.headless true
 ```
+
 Opens at http://localhost:8501
+
+### Doc Extractor
+
+Google Apps Script for extracting content from Google Docs (useful for pulling docs into Cursor).
+
+See [tools/doc-extractor/README.md](tools/doc-extractor/README.md)
+
+---
+
+## Related Repos
+
+| Repo | Purpose |
+|------|---------|
+| `omni-eval-improvements` | Omni-specific eval analysis and improvements |
+| `bi-research-test` | BI agent development |
+
+---
+
+## When to Work Here vs. Elsewhere
+
+**Work here when:**
+- Building Model UX as a discipline
+- Creating training materials or guides
+- Developing tools for Model UX work
+- Adding to the research foundation
+
+**Work in `omni-eval-improvements` when:**
+- Analyzing specific Omni eval results
+- Proposing changes to Omni's eval setup
+- Debugging agent-specific issues

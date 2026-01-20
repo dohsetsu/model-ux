@@ -105,6 +105,6 @@ The playground includes 10 curated test cases from real BI agent evaluation scen
 
 ## Related Docs
 
-- [Eval Primer](../../docs/eval/EVAL_PRIMER.md) — Background on evaluation concepts
-- [BI Eval Analysis](../../docs/eval/BI_EVAL_ANALYSIS_v2.md) — Analysis of BI-specific eval issues
+- [Eval Primer](../../docs/EVAL_PRIMER.md) — Background on evaluation concepts
+- [Rubric Craft Guide](../../docs/eval/RUBRIC_CRAFT_GUIDE.md) — How to write effective rubrics
 
