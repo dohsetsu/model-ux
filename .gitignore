@@ -1,6 +1,9 @@
 # Work in progress (not ready for sharing)
 _wip/
 
+# Personal context notes
+CONTEXT_SUMMARY.md
+
 # Reference documents (keep locally, don't track in git)
 docs/reference/
 *.docx

@@ -2,8 +2,6 @@
 
 A collection of documentation, frameworks, and guides for the **Model UX** discipline — the practice of ensuring AI-powered products behave correctly and deliver high-quality user experiences at scale.
 
-> **👋 New here?** See [CONTEXT_SUMMARY.md](CONTEXT_SUMMARY.md) for a recommended reading order.
-
 ---
 
 ## Why this exists
