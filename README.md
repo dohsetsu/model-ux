@@ -43,7 +43,6 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 | [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop |
 | [Eval Primer](docs/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
 | [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) | How to write effective rubrics — principles, techniques, examples |
-| [Rubric Rewrites](docs/eval/RUBRIC_REWRITES.md) | Before/after rewrites for all 6 metrics with explanations |
 
 ---
 
@@ -117,7 +116,6 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | Understand how CD skills transfer | [Evolution Guide](docs/MODEL_UX_EVOLUTION.md) |
 | Learn what evals are | [Eval Primer](docs/EVAL_PRIMER.md) |
 | Learn to write rubrics | [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) |
-| See before/after rubric rewrites | [Rubric Rewrites](docs/eval/RUBRIC_REWRITES.md) |
 | Extract Google Docs for analysis | [Doc Extractor](tools/doc-extractor/) |
 
 ---
