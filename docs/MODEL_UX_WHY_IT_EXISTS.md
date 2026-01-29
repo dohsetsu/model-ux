@@ -1,4 +1,4 @@
-# Why Model UX Exists: The Gap That Had to Be Filled
+# Why Model UX exists: the gap that had to be filled
 
 *A forensic look at what was broken before—and how Model UX fixes it.*
 
@@ -7,7 +7,7 @@
 
 ---
 
-## TL;DR for Leadership
+## TL;DR for leadership
 
 Before Model UX existed, everyone was touching the model, but **no one was designing it**. Content Design focused on voice, Engineering focused on performance, Design built beautiful specs in Figma—and the experience of the model itself fell through the cracks.
 
@@ -17,7 +17,7 @@ Model UX fills the "missing layer" between user intent and model reasoning. It e
 
 ---
 
-## ⚙️ Before Model UX: Who Did What?
+## (._.) Before Model UX: who did what?
 
 | Responsibility Layer | Who Owned It Before | Resulting Gap or Pain Point |
 |---------------------|---------------------|----------------------------|
@@ -32,7 +32,7 @@ Model UX fills the "missing layer" between user intent and model reasoning. It e
 
 ---
 
-## 🔍 What Was Actually Happening (and Why It Failed)
+## (@_@) What was actually happening (and why it failed)
 
 | Responsibility Layer | Who Handled It | Symptoms / What Went Wrong | Why It Was Suboptimal |
 |---------------------|----------------|---------------------------|----------------------|
@@ -47,7 +47,7 @@ Model UX fills the "missing layer" between user intent and model reasoning. It e
 
 ---
 
-## 💥 The Systemic Fails
+## (>_<) The systemic fails
 
 | Failure Type | Description | Impact |
 |--------------|-------------|--------|
@@ -61,7 +61,7 @@ Model UX fills the "missing layer" between user intent and model reasoning. It e
 
 ---
 
-## 🎨 The Design-to-Model Gap (A Pattern We See Constantly)
+## (~'.')~ The design-to-model gap (a pattern we see constantly)
 
 Here's a scenario that plays out across every AI product team:
 
@@ -73,7 +73,7 @@ Here's a scenario that plays out across every AI product team:
 
 The problem? **No one ever asked the million-dollar question:** *"Does the model know we want this?"*
 
-### The Pattern in Practice
+### The pattern in practice
 
 This shows up everywhere: formatting guidelines, response length expectations, when to use bullets vs. prose, how to handle edge cases, what tone to strike in error states. 
 
@@ -81,7 +81,7 @@ Design specs capture these decisions beautifully. But between "approved in Figma
 
 It's not a failure of any individual or team. It's a structural gap. The workflow assumes the model will somehow inherit the spec, but models don't attend design reviews.
 
-### Why This Keeps Happening
+### Why this keeps happening
 
 This isn't anyone's fault—it's a gap in how teams are structured:
 
@@ -93,7 +93,7 @@ This isn't anyone's fault—it's a gap in how teams are structured:
 
 The problem is that all of this is so new—no one knows who to ask, what to ask for, or how to ask for it. Teams are genuinely surprised when the model doesn't magically inherit what they built in Figma.
 
-### What Model UX Does Here
+### What Model UX does here
 
 | Without Model UX | With Model UX |
 |------------------|---------------|
@@ -104,7 +104,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 
 ---
 
-## 🚀 After Model UX: Filling the Missing Layer
+## \(^o^)/ After Model UX: filling the missing layer
 
 | Responsibility Layer | Who Owns It Now | What's Different / Improved | Why It Works Better |
 |---------------------|-----------------|----------------------------|---------------------|
@@ -119,7 +119,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 
 ---
 
-## 💡 Why This Works (Summary)
+## (°o°) Why this works (summary)
 
 | Problem Before | How Model UX Fixes It |
 |----------------|----------------------|
@@ -134,7 +134,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 
 ---
 
-## 🧩 The Core Insight
+## (*_*) The core insight
 
 > **Before, language was treated as decoration.**
 > 
@@ -142,7 +142,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 
 ---
 
-## The Missing Layer Visualized
+## The missing layer visualized
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -154,7 +154,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │     ┌─────────────────────────────────────────────────┐     │
-│     │              🧠 MODEL UX                         │     │
+│     │              ('o') MODEL UX                      │     │
 │     │         (The missing layer)                      │     │
 │     │                                                  │     │
 │     │   • Translates design specs → model instructions │     │
@@ -175,7 +175,7 @@ The problem is that all of this is so new—no one knows who to ask, what to ask
 
 ---
 
-## Related Documents
+## Related documents
 
 - [MODEL_UX_EVOLUTION.md](MODEL_UX_EVOLUTION.md) — How CD skills transfer to Model UX
 - [MODEL_UX_ROLE_DESCRIPTION.md](MODEL_UX_ROLE_DESCRIPTION.md) — Leadership-ready role description
