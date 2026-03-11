@@ -93,7 +93,9 @@ What dimensions of quality you're measuring.
 | Latency | How fast did it respond? |
 | Cost | How much did the API calls cost? |
 
-**Choose metrics that matter for your use case.** A chatbot and a financial analyst tool need different metrics.
+**Choose metrics that matter for your use case.** A chatbot and a financial analyst tool need different metrics.[^amershi]
+
+[^amershi]: Microsoft's "Guidelines for Human-AI Interaction" (Amershi et al., CHI 2019) provides 18 evidence-based guidelines for AI systems — useful for thinking about what dimensions matter. [PDF](https://www.microsoft.com/en-us/research/uploads/prod/2019/01/Guidelines-for-Human-AI-Interaction-camera-ready.pdf)
 
 ### 4. Evaluation method
 How you determine pass/fail for each metric.
@@ -184,6 +186,10 @@ This is usually a good tradeoff — but only if you:
 ### How the judge can be wrong
 
 This is the critical part. **The judge is not an oracle.** It's another LLM with its own biases and limitations.
+
+These biases are well-documented in research — particularly the MT-Bench/Chatbot Arena paper (Zheng et al., NeurIPS 2023), which provides empirical evidence for each of these failure modes.[^mtbench]
+
+[^mtbench]: Zheng, L., Chiang, W-L., et al. "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena." NeurIPS 2023. [arxiv.org/abs/2306.05685](https://arxiv.org/abs/2306.05685)
 
 #### Position bias
 If you show the judge two responses (A and B) and ask "which is better?", it may prefer whichever one you showed first — regardless of actual quality.
@@ -563,7 +569,9 @@ Models can learn to perform well on public benchmarks without truly understandin
 - Generate answers that "look right" without genuine reasoning
 - Score high on benchmarks but fail on slight variations
 
-Researchers call this **benchmark contamination** or **data leakage** — when training data overlaps with or "leaks" into test sets. This is why some benchmarks now use closed/held-out test sets to reduce contamination.
+Researchers call this **benchmark contamination** or **data leakage** — when training data overlaps with or "leaks" into test sets. This is why some benchmarks now use closed/held-out test sets to reduce contamination.[^helm]
+
+[^helm]: The HELM framework (Stanford CRFM) addresses this by measuring models across multiple dimensions — not just accuracy, but robustness, fairness, bias, and efficiency. See: Liang et al. "Holistic Evaluation of Language Models." [arxiv.org/abs/2211.09110](https://arxiv.org/abs/2211.09110)
 
 **Why it matters:** A model that "passes" an eval may still fail in real-world scenarios that weren't in the test set.
 
@@ -619,7 +627,9 @@ The eval crisis doesn't mean evals are useless — it means we need to be though
 4. **Validating construct validity** — does your eval actually predict what users care about?
 5. **Combining methods** rather than relying on any single approach
 
-This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.
+This is why Model UX exists as a discipline: we need people who understand both the language/UX side and the evaluation/measurement side to bridge this gap.[^lam]
+
+[^lam]: Research supports this: "Many harmful behaviors and problematic deployments of AI stem from the fact that AI experts are *not* experts in the vast array of settings where AI is applied." — Lam, UIST '24. See the [Research Foundation](research/RESEARCH_FOUNDATION.md) for the full academic backing.
 
 **What to do about it:** See [Eval best practices](#eval-best-practices-what-works-in-20252026) for concrete mitigations.
 

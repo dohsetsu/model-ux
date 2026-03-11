@@ -4,6 +4,20 @@ A collection of documentation, frameworks, and guides for the **Model UX** disci
 
 ---
 
+## Why this exists
+
+We've heard it from every stage: *"AI changes everything."* CEOs promise transformation. Entire industries will evolve. Nothing will be the same.
+
+And yet — when Content Designers suggest that *our* roles might change, that our responsibilities might expand, that we might have something essential to contribute to AI product development? Suddenly it's pearl-clutching time.
+
+This disconnect isn't new. Content Design has historically been undervalued — given lip service about importance while being excluded from real decision-making. Our work shapes how millions of people experience products, but we've rarely had a true seat at the table.
+
+**The AI era changes that — if we're willing to change with it.**
+
+Model UX is an invitation: to evolve our craft, to claim expertise in territory that desperately needs it, and to finally be recognized for the strategic value we've always brought. The models are generating language at scale. *Someone* needs to ensure that language is good. That someone should be us.
+
+---
+
 ## What is Model UX?
 
 Model UX sits at the intersection of Content Design, Product Design, and AI Engineering. While traditional Content Design focuses on what appears in a product's UI, Model UX focuses on the **systems that generate content** — the instructions, evaluations, and quality frameworks that shape how AI models respond to users.
@@ -18,43 +32,21 @@ Model UX sits at the intersection of Content Design, Product Design, and AI Engi
 
 | Document | Description |
 |----------|-------------|
-| [Model UX Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) | What the role does, key deliverables, business value, and how it differs from traditional CD |
-| [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) | Academic validation from CHI/UIST research (2023-2025) — for when leadership asks "is this real?" |
+| [Model UX Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) | What the role does, key deliverables, business value |
+| [Why Model UX Exists](docs/MODEL_UX_WHY_IT_EXISTS.md) | The gap that existed before — who owned what, what broke, how Model UX fills it |
+| [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) | Academic validation from CHI/UIST research (2023-2025) |
 
 ### For Practitioners & Content Designers
 
 | Document | Description |
 |----------|-------------|
-| [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop, and getting started |
+| [Model UX Evolution Guide](docs/MODEL_UX_EVOLUTION.md) | How Content Design skills translate to Model UX, new skills to develop |
 | [Eval Primer](docs/EVAL_PRIMER.md) | Foundational explainer: what evals are, why they matter, how to read results |
-| [Eval Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) | How to think about evals, write rubrics, and avoid common traps |
-| [Eval Rubric Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) | Full proposal for agent-aware rubric improvements (Omni case study) |
-| [Revised Rubrics Proposal](docs/eval/REVISED_RUBRICS_PROPOSAL.md) | Detailed human-readable + implementation versions for all metrics |
+| [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) | How to write effective rubrics — principles, techniques, examples |
 
 ---
 
 ## Tools
-
-Utilities to make Model UX work easier. Use them, share them, improve them.
-
-### Eval Playground
-
-An interactive Streamlit demo that lets you **see how rubric choice affects eval results** in real-time.
-
-**Features:**
-- Compare Generic vs. Agent-Aware rubrics on identical test cases
-- Visualize how weighting changes overall scores
-- Run LLM-as-a-judge evaluations with your own test cases
-
-**Run it locally:**
-```bash
-cd tools/eval_playground
-source venv/bin/activate
-export OPENAI_API_KEY="your-key-here"
-streamlit run app.py --server.headless true
-```
-
-See [tools/eval_playground/README.md](tools/eval_playground/README.md) for details.
 
 ### Google Doc Extractor
 
@@ -119,12 +111,11 @@ See [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) for full citatio
 | If you want to... | Start here |
 |-------------------|------------|
 | Explain the role to leadership | [Role Description](docs/MODEL_UX_ROLE_DESCRIPTION.md) |
+| Explain why this role needs to exist | [Why Model UX Exists](docs/MODEL_UX_WHY_IT_EXISTS.md) |
 | Show academic backing for the discipline | [Research Foundation](docs/research/RESEARCH_FOUNDATION.md) |
 | Understand how CD skills transfer | [Evolution Guide](docs/MODEL_UX_EVOLUTION.md) |
 | Learn what evals are | [Eval Primer](docs/EVAL_PRIMER.md) |
-| Write better rubrics | [Rubrics CD Guide](docs/eval/EVAL_RUBRICS_CD_GUIDE.md) |
-| See the full Omni rubric proposal | [Alignment Proposal](docs/eval/VOICE_TONE_RUBRIC_PROPOSAL.md) |
-| See rubric impact live | [Eval Playground](tools/eval_playground/) |
+| Learn to write rubrics | [Rubric Craft Guide](docs/eval/RUBRIC_CRAFT_GUIDE.md) |
 | Extract Google Docs for analysis | [Doc Extractor](tools/doc-extractor/) |
 
 ---

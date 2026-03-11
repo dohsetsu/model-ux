@@ -26,7 +26,7 @@ A single Google Doc that extracts tabs and images from any Google Docs you have 
 
 ### Step 4: First Run (Authorization)
 
-1. Click **📄 Doc Extractor → 🔗 Extract from URLs...**
+1. Click **📄 Doc Extractor → 🔗 Extract Docs...**
 2. Google will ask you to authorize the script
 3. Click through the permissions (it needs access to Docs and Drive)
 4. The dialog will appear - you're ready to go!
@@ -35,17 +35,10 @@ A single Google Doc that extracts tabs and images from any Google Docs you have 
 
 ## How to Use
 
-### Extract from URLs (main feature)
-
-1. Click **📄 Doc Extractor → 🔗 Extract from URLs...**
+1. Click **📄 Doc Extractor → 🔗 Extract Docs...**
 2. Paste Google Doc URLs (one per line)
 3. Click **📦 Extract All**
-4. ZIP file downloads automatically
-
-### Extract Current Doc
-
-1. Click **📄 Doc Extractor → 📑 Extract THIS doc**
-2. ZIP file downloads automatically
+4. ZIP file is saved to your Google Drive — dialog shows link to download
 
 ---
 
@@ -88,9 +81,10 @@ Tables are formatted like:
 - You need at least "Viewer" access to extract a doc
 - Check that the URL is correct
 
-### Download not starting?
-- Check your browser's popup blocker
-- Try the manual download link in the dialog
+### Can't find the ZIP?
+- The ZIP is saved to your Google Drive root folder
+- Click the "Open in Drive" link in the dialog
+- From Drive, click the download button (⬇️)
 
 ---
 
@@ -111,7 +105,7 @@ Two options:
 
 ## Notes
 
-- The script temporarily creates a file in your Drive to enable download, then deletes it
+- ZIP files are saved to your Google Drive root folder (you can delete after downloading)
 - Works with docs that have multiple tabs
 - Images are extracted at their original resolution
 - Large docs may take a few seconds to process
