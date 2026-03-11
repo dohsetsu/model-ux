@@ -1,0 +1,14 @@
+{
+  "name": "prompting-301",
+  "version": "1.0.0",
+  "description": "Model UX demos — prompt engineering beyond voice and tone",
+  "type": "module",
+  "scripts": {
+    "demo:01": "node 01-dynamic-system-prompt/demo.js",
+    "demo:02": "node 02-assistant-prefill/demo.js",
+    "demo:03": "node 03-injection-when-locked/demo.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
